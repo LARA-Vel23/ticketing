@@ -1,0 +1,47 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use {{ rootNamespace }}Http\Controllers\Controller;
+use {{ namespacedRequests }}
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+
+class {{ class }} extends Controller
+{
+   public function index(): View
+    {
+        return view('pages.module.index', compact('data'));
+    }
+
+    public function create(): View
+    {
+        return view('pages.module.create');
+    }
+
+    public function store({{ storeRequest }} $request): RedirectResponse
+    {
+        return redirect()->back()->withSuccess('Module Created Successfully!');
+    }
+
+    public function show({{ model }} ${{ modelVariable }}): View
+    {
+        return view('pages.module.show', compact('data'));
+    }
+
+    public function edit({{ model }} ${{ modelVariable }}): View
+    {
+        return view('pages.module.show', compact('data'));
+    }
+
+    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }}): RedirectResponse
+    {
+        return redirect()->back()->withSuccess('Module Updated Successfully!');
+    }
+
+    public function destroy({{ model }} ${{ modelVariable }}): RedirectResponse
+    {
+        return redirect()->back()->withSuccess('Module Deleted Successfully!');
+    }
+}
