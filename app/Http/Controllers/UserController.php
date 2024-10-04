@@ -12,7 +12,11 @@ class UserController extends Controller
 {
    public function index(): View
     {
-        $users = User::paginate(10);
+        $users = User::query()
+            ->search(request()->get('search'))
+            ->filterStatus(request()->get('status'))
+            ->latest()
+            ->paginate(10);
         return view('pages.admin.admin.index', compact('users'));
     }
 
