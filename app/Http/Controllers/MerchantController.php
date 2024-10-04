@@ -8,19 +8,19 @@ use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
-class UserController extends Controller
+class MerchantController extends Controller
 {
 
     private $limit = 10;
     public function index(): View
     {
-        $users = User::query()
-            ->where('is_admin', 1)
+        $merchants = User::query()
+            ->where('is_admin', 0)
             ->search(request()->get('search'))
             ->filterStatus(request()->get('status'))
             ->latest()
             ->paginate(request()->get('limit') ? request()->get('limit') : $this->limit);
-        return view('pages.admin.admin.index', compact('users'));
+        return view('pages.admin.merchant.index', compact('merchants'));
     }
 
     public function create(): View

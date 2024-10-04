@@ -10,9 +10,16 @@ use Illuminate\Http\RedirectResponse;
 
 class PermissionController extends Controller
 {
-   public function index(): View
+    private $limit = 10;
+    public function index(): View
     {
-        return view('pages.module.index', compact('data'));
+        // dd(Permission::all());
+        $permissions = Permission::query()
+            // ->search(request()->get('search'))
+            // // ->filterStatus(request()->get('status'))
+            // ->latest()
+            ->paginate(request()->get('limit') ? request()->get('limit') : $this->limit);
+        return view('pages.admin.permission.index', compact('permissions'));
     }
 
     public function create(): View
