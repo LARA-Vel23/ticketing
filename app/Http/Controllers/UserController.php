@@ -10,19 +10,21 @@ use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
-   public function index(): View
+
+    private $limit = 10;
+    public function index(): View
     {
         $users = User::query()
             ->search(request()->get('search'))
             ->filterStatus(request()->get('status'))
             ->latest()
-            ->paginate(10);
+            ->paginate(request()->get('limit') ? request()->get('limit') : $this->limit);
         return view('pages.admin.admin.index', compact('users'));
     }
 
     public function create(): View
     {
-        return view('pages.module.create');
+        return view('pages.admin.admin.create');
     }
 
     public function store(StoreUserRequest $request): RedirectResponse
@@ -32,12 +34,12 @@ class UserController extends Controller
 
     public function show(User $user): View
     {
-        return view('pages.module.show', compact('data'));
+        return view('pages.admin.admin.show', compact('data'));
     }
 
     public function edit(User $user): View
     {
-        return view('pages.module.show', compact('data'));
+        return view('pages.admin.admin.edit', compact('data'));
     }
 
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
@@ -47,6 +49,7 @@ class UserController extends Controller
 
     public function destroy(User $user): RedirectResponse
     {
+        $user->delete();
         return redirect()->back()->withSuccess('Module Deleted Successfully!');
     }
 }

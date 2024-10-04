@@ -82,4 +82,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserPermission::class);
     }
+
+    public function getUserRolesAttribute(){
+        $array = [];
+        foreach(UserRole::where('user_id', $this->attributes['id'])->get() as $userRole)
+        {
+            array_push($array, '<span class="badge bg-secondary">' . $userRole->role->name . '</span>');
+        }
+        return $array ? implode(" ",$array) : '';
+    }
 }
