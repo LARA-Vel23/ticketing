@@ -14,10 +14,11 @@
             background-color: #c9d6ff;
             background: linear-gradient(to right, #e2e2e2, #c9d6ff);
             display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            height: 100vh;
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+            height: 100vh; /* Full height of the viewport */
+            margin: 0; /* Remove default margin */
+            padding: 20px; /* Adjust padding for small screens */
         }
 
         .container{
@@ -26,9 +27,12 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
             position: relative;
             overflow: hidden;
-            width: 768px;
-            max-width: 100%;
+            width: 100%; /* Make the width responsive */
+            max-width: 768px; /* Max width for larger screens */
             min-height: 480px;
+            padding: 30px; /* Adjust padding as needed */
+            display: flex; /* Flexbox for child elements */
+            flex-direction: column; /* Stack child elements vertically */
         }
 
         .container p{
@@ -49,8 +53,7 @@
             margin: 1px 0 1px;
         }
 
-        .container button{
-            /* background-color: #1ba53d; */
+        .container button {
             color: #fff;
             font-size: 12px;
             padding: 10px 45px;
@@ -61,6 +64,9 @@
             text-transform: uppercase;
             margin-top: 10px;
             cursor: pointer;
+            display: inline-flex; /* Change display to inline-flex */
+            align-items: center;  /* Center text vertically */
+            justify-content: center; /* Center text horizontally */
         }
 
         .container button.hidden{
@@ -118,6 +124,15 @@
             opacity: 1;
             z-index: 5;
             animation: move 0.6s;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 20px; /* Adjust body padding for smaller screens */
+            }
+
+            .container {
+                padding: 20px; /* Adjust container padding for smaller screens */
+            }
         }
 
         @keyframes move{
