@@ -14,11 +14,11 @@
             background-color: #c9d6ff;
             background: linear-gradient(to right, #e2e2e2, #c9d6ff);
             display: flex;
-            align-items: center; /* Center vertically */
-            justify-content: center; /* Center horizontally */
-            height: 100vh; /* Full height of the viewport */
-            margin: 0; /* Remove default margin */
-            padding: 20px; /* Adjust padding for small screens */
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
 
         .container{
@@ -27,12 +27,12 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
             position: relative;
             overflow: hidden;
-            width: 100%; /* Make the width responsive */
-            max-width: 768px; /* Max width for larger screens */
+            width: 100%;
+            max-width: 768px;
             min-height: 480px;
-            padding: 30px; /* Adjust padding as needed */
-            display: flex; /* Flexbox for child elements */
-            flex-direction: column; /* Stack child elements vertically */
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
         }
 
         .container p{
@@ -64,9 +64,9 @@
             text-transform: uppercase;
             margin-top: 10px;
             cursor: pointer;
-            display: inline-flex; /* Change display to inline-flex */
-            align-items: center;  /* Center text vertically */
-            justify-content: center; /* Center text horizontally */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .container button.hidden{
@@ -77,7 +77,6 @@
         .container form{
             background-color: #fff;
             display: flex;
-            /* /* align-items: center; */
             justify-content: center;
             flex-direction: column;
             padding: 0 40px;
@@ -127,11 +126,11 @@
         }
         @media (max-width: 768px) {
             body {
-                padding: 20px; /* Adjust body padding for smaller screens */
+                padding: 20px;
             }
 
             .container {
-                padding: 20px; /* Adjust container padding for smaller screens */
+                padding: 20px;
             }
         }
 

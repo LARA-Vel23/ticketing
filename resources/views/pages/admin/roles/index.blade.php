@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <nav aria-label="breadcrumb">
+    <div class="col-12">
+        {{-- <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-3" style="font-size: 0.7rem;">
                 <li class="breadcrumb-item">
                     <a href="javascript:void(0);">{{ __('Home') }}</a>
@@ -14,8 +14,8 @@
                     {{ __('Data') }}
                 </li>
             </ol>
-        </nav>
-        <div class="rounded-0 shadow-sm bg-white">
+        </nav> --}}
+        <div class="rounded-3 shadow-sm bg-white">
             <div class="d-flex flex-column gap-3 p-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <h4 class="poppins-semibold mb-0">{{ __('Roles') }}</h4>

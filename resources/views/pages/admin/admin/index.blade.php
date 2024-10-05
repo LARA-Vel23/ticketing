@@ -1,21 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-3" style="font-size: 0.7rem;">
-                <li class="breadcrumb-item">
-                    <a href="javascript:void(0);">{{ __('Home') }}</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="javascript:void(0);">{{ __('Library') }}</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    {{ __('Data') }}
-                </li>
-            </ol>
-        </nav>
-        <div class="rounded-0 shadow-sm bg-white">
+    <div class="col-12">
+    {{-- <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-3" style="font-size: 0.7rem;">
+            <li class="breadcrumb-item">
+                <a href="javascript:void(0);">{{ __('Home') }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="javascript:void(0);">{{ __('Library') }}</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                {{ __('Data') }}
+            </li>
+        </ol>
+    </nav> --}}
+
+        <div class="rounded-3 shadow-sm bg-white">
             <div class="d-flex flex-column gap-3 p-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <h4 class="poppins-semibold mb-0">{{ __('Admin') }}</h4>
@@ -51,7 +52,7 @@
                     </div>
                 </form>
             </div>
-            <div class="table-responsive tableFixHead" style="height: 578px;">
+            <div class="table-responsive tableFixHead" style="height: 578px; width:100%;">
                 <table class="table table-hover align-middle m-0">
                     <thead>
                         <tr class="text-uppercase">
@@ -64,7 +65,7 @@
                             <th class="text-center">{{ __('Manage') }}</th>
                         </tr>
                     </thead>
-                  <tbody>
+                <tbody>
                     @forelse ($users as $user)
                         <tr>
                             <td>{{ $user->name }}</td>
@@ -100,7 +101,7 @@
                             </td>
                         </tr>
                     @endforelse
-                  </tbody>
+                </tbody>
                 </table>
             </div>
             <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-center align-items-md-center p-3">

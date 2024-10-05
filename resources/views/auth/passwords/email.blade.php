@@ -14,11 +14,11 @@
             background-color: #c9d6ff;
             background: linear-gradient(to right, #e2e2e2, #c9d6ff);
             display: flex;
-            align-items: center; /* Center vertically */
-            justify-content: center; /* Center horizontally */
-            padding: 15px; /* You may want to adjust or remove this padding */
-            height: 100vh; /* Full height of the viewport */
-            margin: 0; /* Remove default margin */
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            height: 100vh;
+            margin: 0;
         }
 
         .container{
@@ -27,21 +27,21 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
             position: relative;
             overflow: hidden;
-            width: 768px; /* You can set this to a max-width if needed */
+            width: 768px;
             max-width: 100%;
             min-height: 450px;
-            padding: 30px; /* Adjust padding as needed */
-            display: flex; /* Ensures it works well with child elements */
-            flex-direction: column; /* Stack child elements vertically */
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
         }
 
         @media (max-width: 768px) {
             body {
-                padding: 20px; /* Adjust body padding for smaller screens */
+                padding: 20px;
             }
 
             .container {
-                padding: 20px; /* Adjust container padding for smaller screens */
+                padding: 20px;
             }
         }
 
