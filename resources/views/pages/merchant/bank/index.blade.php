@@ -15,7 +15,7 @@
                 </li>
             </ol>
         </nav> --}}
-        <div class="rounded-3 shadow-sm bg-white">
+        <div class="rounded-3 shadow-sm bg-white" style="height: auto;">
             <div class="d-flex flex-column gap-3 p-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <h4 class="poppins-semibold mb-0">{{ __('Banks') }}</h4>
@@ -50,75 +50,75 @@
                         </select>
                     </div>
                 </form>
-            </div>
-            <div class="table-responsive tableFixHead" style="height: 578px;">
-                <table class="table table-hover align-middle m-0">
-                    <thead>
-                        <tr class="d-flex justify-content-center text-uppercase">
-                            <th class="col">{{ __('User ID') }}</th>
-                            <th class="col">{{ __('Name') }}</th>
-                            <th class="col">{{ __('Account Name') }}</th>
-                            <th class="col">{{ __('Account Number') }}</th>
-                            <th class="col">{{ __('Bank ifsc') }}</th>
-                            <th class="col">{{ __('Bank Swift') }}</th>
-                            <th class="col">{{ __('Bank Branch') }}</th>
-                            <th class="col">{{ __('Bank Branch Code') }}</th>
-                            <th class="col">{{ __('Status') }}</th>
-                            <th class="col">{{ __('Date Created') }}</th>
-                            <th class="col">{{ __('Last Modified') }}</th>
-                            <th class="col">{{ __('Manage') }}</th>
-                        </tr>
-                    </thead>
-                  <tbody>
-                    @forelse ($banks as $bank)
-                        <tr>
-                            <td>{{ $bank->user_id }}</td>
-                            <td>{{ $bank->name }}</td>
-                            <td>{{ $bank->account_name }}</td>
-                            <td>{{ $bank->account_number }}</td>
-                            <td>{{ $bank->bank_ifsc }}</td>
-                            <td>{{ $bank->bank_swift }}</td>
-                            <td>{{ $bank->bank_branch }}</td>
-                            <td>{{ $bank->bank_branch_code }}</td>
-                            <td>{{ $bank->status }}</td>
-                            <td>{{ $bank->readable_created_date }}</td>
-                            <td>{{ $bank->readable_updated_date }}</td>
-                            <td>
-                                <div class="d-flex justify-content-center gap-3 align-items-center">
-                                    <a href="javascript:void(0);" style="font-size: 1.2em;" class="text-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Data">
-                                        <i class="bi bi-book"></i>
-                                    </a>
-                                    <a href="javascript:void(0);" style="font-size: 1.2em;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    <form method="POST" action="javascript:void(0);" onsubmit="return confirm('Are you sure want to delete this data?')">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit" class="btn btn-light border border-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data">
-                                            <i class="bi bi-trash2 text-danger"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan=7>
-                                <div class="d-flex justify-content-center align-items-center" style="height: 500px;">
-                                    <div style="font-size: 1em;" class="text-muted">{{ __('No Resource Found') }}</div>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforelse
-                  </tbody>
-                </table>
-            </div>
-            <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-center align-items-md-center p-3">
-                <div>
-                    Showing {{($banks->currentpage()-1)*$banks->perpage()+1}} to {{$banks->currentpage()*$banks->perpage()}}
-                    of  {{$banks->total()}} entries
+                <div class="table-responsive tableFixHead" style="height: 347px; width:100%;">
+                    <table class="table table-hover align-middle m-0">
+                        <thead>
+                            <tr class="d-flex justify-content-center text-uppercase">
+                                <th class="col" style="font-size:0.6em;">{{ __('User ID') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Name') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Account Name') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Account Number') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Bank ifsc') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Bank Swift') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Bank Branch') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Bank Branch Code') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Status') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Date Created') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Last Modified') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Manage') }}</th>
+                            </tr>
+                        </thead>
+                      <tbody>
+                        @forelse ($banks as $bank)
+                            <tr>
+                                <td>{{ $bank->user_id }}</td>
+                                <td>{{ $bank->name }}</td>
+                                <td>{{ $bank->account_name }}</td>
+                                <td>{{ $bank->account_number }}</td>
+                                <td>{{ $bank->bank_ifsc }}</td>
+                                <td>{{ $bank->bank_swift }}</td>
+                                <td>{{ $bank->bank_branch }}</td>
+                                <td>{{ $bank->bank_branch_code }}</td>
+                                <td>{{ $bank->status }}</td>
+                                <td>{{ $bank->readable_created_date }}</td>
+                                <td>{{ $bank->readable_updated_date }}</td>
+                                <td>
+                                    <div class="d-flex justify-content-center gap-3 align-items-center">
+                                        <a href="javascript:void(0);" style="font-size: 1.2em;" class="text-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Data">
+                                            <i class="bi bi-book"></i>
+                                        </a>
+                                        <a href="javascript:void(0);" style="font-size: 1.2em;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <form method="POST" action="javascript:void(0);" onsubmit="return confirm('Are you sure want to delete this data?')">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-light border border-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data">
+                                                <i class="bi bi-trash2 text-danger"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan=7>
+                                    <div class="d-flex justify-content-center align-items-center" style="height: 500px;">
+                                        <div style="font-size: 1em;" class="text-muted">{{ __('No Resource Found') }}</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                      </tbody>
+                    </table>
                 </div>
-                {{ $banks->withQueryString()->links() }}
+                <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-center align-items-md-center p-3">
+                    <div>
+                        Showing {{($banks->currentpage()-1)*$banks->perpage()+1}} to {{$banks->currentpage()*$banks->perpage()}}
+                        of  {{$banks->total()}} entries
+                    </div>
+                    {{ $banks->withQueryString()->links() }}
+                </div>
             </div>
         </div>
     </div>

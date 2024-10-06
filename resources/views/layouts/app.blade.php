@@ -17,7 +17,7 @@
     @livewireStyles
     <style>
         body{
-            overflow: hidden;
+             /* overflow-y: hidden; */
         }
         ::after,
         ::before {
@@ -35,7 +35,7 @@
         }
 
 
-        .main {
+        /* .main {
 
             flex-direction: column;
             min-height: 100vh;
@@ -48,11 +48,11 @@
             flex: 1;
             overflow-x: hidden;
 
-        }
+        } */
 
         #sidebar {
-            width: 70px;
-            min-width: 70px;
+            width: 60px;
+            min-width: 60px;
             z-index: 1000;
             transition: all .25s ease-in-out;
             background-color: #0e2238;
@@ -62,15 +62,15 @@
         }
 
         #sidebar.expand {
-            width: 260px;
-            min-width: 260px;
+            width: 170px;
+            min-width: 170px;
         }
 
         .toggle-btn {
             background-color: transparent;
             cursor: pointer;
             border: 0;
-            padding: 1rem 1.5rem;
+            padding: 1rem 1.2rem;
         }
 
         .toggle-btn i {
@@ -84,8 +84,8 @@
 
         .sidebar-logo a {
             color: #FFF;
-            font-size: 1.15rem;
-            font-weight: 600;
+            font-size: 1rem;
+            font-weight: 500;
             text-decoration: none;
         }
 
@@ -110,15 +110,15 @@
         }
 
         .sidebar-nav {
-            padding: 2rem 0;
+            padding: 1rem 0;
             flex: 1 1 auto;
         }
 
         a.sidebar-link {
-            padding: 1rem 1.5rem;
+            padding: 1rem 1.2rem;
             color: #FFF;
             display: block;
-            font-size: 1.2rem;
+            font-size: 0.8rem;
             white-space: nowrap;
             border-left: 3px solid transparent;
             text-decoration: none;
@@ -126,7 +126,7 @@
 
         .sidebar-link i,
         .dropdown-item i {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             margin-right: .75rem;
         }
 
@@ -188,9 +188,7 @@
             width: 40px;
         } */
 
-
-
-        @media (min-width: 768px) {}
+        /* @media (min-width: 768px) {} */
     </style>
 </head>
 
@@ -238,8 +236,8 @@
                 </a>
             </div>
         </aside>
-        <main class="w-100">
-            <div class=p-3>
+        <main class="w-100" style="height: 250px;">
+            <div class="p-3">
                 @yield('content')
             </div>
 

@@ -50,61 +50,61 @@
                             </select>
                         </div>
                     </form>
-                </div>
-                <div class="table-responsive tableFixHead" style="height: 578px;">
-                    <table class="table table-hover align-middle m-0">
-                        <thead>
-                            <tr class="text-uppercase">
-                                <th>{{ __('Name') }}</th>
-                                <th>{{ __('Description') }}</th>
-                                <th>{{ __('Date Created') }}</th>
-                                <th>{{ __('Last Modified') }}</th>
-                                <th class="text-center">{{ __('Manage') }}</th>
-                            </tr>
-                        </thead>
-                    <tbody>
-                        @forelse ($permissions as $permission)
-                            <tr>
-                                <td>{{ $permission->name }}</td>
-                                <td>{{ $permission->description }}</td>
-                                <td>{{ $permission->readable_created_date }}</td>
-                                <td>{{ $permission->readable_updated_date }}</td>
-                                <td>
-                                    <div class="d-flex justify-content-center gap-3 align-items-center">
-                                        <a href="javascript:void(0);" style="font-size: 1.2em;" class="text-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Data">
-                                            <i class="bi bi-book"></i>
-                                        </a>
-                                        <a href="javascript:void(0);" style="font-size: 1.2em;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        <form method="POST" action="javascript:void(0);" onsubmit="return confirm('Are you sure want to delete this data?')">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-light border border-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data">
-                                                <i class="bi bi-trash2 text-danger"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan=7>
-                                    <div class="d-flex justify-content-center align-items-center" style="height: 500px;">
-                                        <div style="font-size: 1em;" class="text-muted">{{ __('No Resource Found') }}</div>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                    </table>
-                </div>
-                <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-center align-items-md-center p-3">
-                    <div>
-                        Showing {{($permissions->currentpage()-1)*$permissions->perpage()+1}} to {{$permissions->currentpage()*$permissions->perpage()}}
-                        of  {{$permissions->total()}} entries
+                    <div class="table-responsive tableFixHead" style="height: 347px; width:100%;">
+                        <table class="table table-hover align-middle m-0">
+                            <thead>
+                                <tr class="text-uppercase">
+                                    <th style="font-size:0.6em;">{{ __('Name') }}</th>
+                                    <th style="font-size:0.6em;">{{ __('Description') }}</th>
+                                    <th style="font-size:0.6em;">{{ __('Date Created') }}</th>
+                                    <th style="font-size:0.6em;">{{ __('Last Modified') }}</th>
+                                    <th class="text-center" style="font-size:0.6em;">{{ __('Manage') }}</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                            @forelse ($permissions as $permission)
+                                <tr>
+                                    <td>{{ $permission->name }}</td>
+                                    <td>{{ $permission->description }}</td>
+                                    <td>{{ $permission->readable_created_date }}</td>
+                                    <td>{{ $permission->readable_updated_date }}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-center gap-3 align-items-center">
+                                            <a href="javascript:void(0);" style="font-size: 1.2em;" class="text-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Data">
+                                                <i class="bi bi-book"></i>
+                                            </a>
+                                            <a href="javascript:void(0);" style="font-size: 1.2em;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <form method="POST" action="javascript:void(0);" onsubmit="return confirm('Are you sure want to delete this data?')">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-light border border-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data">
+                                                    <i class="bi bi-trash2 text-danger"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan=7>
+                                        <div class="d-flex justify-content-center align-items-center" style="height: 500px;">
+                                            <div style="font-size: 1em;" class="text-muted">{{ __('No Resource Found') }}</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                        </table>
                     </div>
-                    {{ $permissions->withQueryString()->links() }}
+                    <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-center align-items-md-center p-3">
+                        <div>
+                            Showing {{($permissions->currentpage()-1)*$permissions->perpage()+1}} to {{$permissions->currentpage()*$permissions->perpage()}}
+                            of  {{$permissions->total()}} entries
+                        </div>
+                        {{ $permissions->withQueryString()->links() }}
+                    </div>
                 </div>
             </div>
     </div>
