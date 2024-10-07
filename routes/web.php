@@ -5,6 +5,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\IpController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +30,4 @@ Route::resource('/role', RoleController::class);
 Route::resource('/merchant', MerchantController::class);
 Route::resource('/bank', BankController::class);
 Route::resource('/transaction', TransactionController::class);
+Route::resource('/ip', IpController::class);

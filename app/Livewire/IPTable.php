@@ -2,19 +2,19 @@
 
 namespace App\Livewire;
 
-use App\Exports\AdminExport;
+use App\Exports\IpExport;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\User;
+use App\Models\IP;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
 use Maatwebsite\Excel\Facades\Excel;
 
-class AdminTable extends DataTableComponent
+class IPTable extends DataTableComponent
 {
-    protected $model = User::class;
+    protected $model = IP::class;
 
     use LivewireAlert;
 
@@ -40,16 +40,12 @@ class AdminTable extends DataTableComponent
         return [
             Column::make("Id", "id")
             ->sortable(),
-            Column::make("Name", "name")
+            Column::make("User ID", "user_id")
                 ->sortable()
                 ->searchable(),
-            Column::make("Email", "email")
+            Column::make("Value", "value")
                 ->sortable()
                 ->searchable(),
-            Column::make('Status', 'status')
-                ->format(function($status){
-                    return $status == 1 ? 'Active' : 'Deactivated';
-                }),
             Column::make("Date Created", "created_at")
                 ->format(function($timestamp){
                     $timestamp = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, 'UTC')
@@ -64,7 +60,7 @@ class AdminTable extends DataTableComponent
             ->sortable(),
             Column::make('Actions', 'id')
                 ->format(function($value, $column, $row) {
-                    return view('pages.admin.admin.action', compact('value', 'column', 'row'));
+                    return view('pages.admin.ip.action', compact('value', 'column', 'row'));
                 })
                 ->excludeFromColumnSelect(),
         ];
@@ -72,17 +68,15 @@ class AdminTable extends DataTableComponent
 
     public function builder(): Builder
     {
-        return User::query()
-            ->isAdmin()
-            ->search(request()->get('search'))
-            ->filterStatus(request()->get('status'))
+        return IP::query()
+            // ->search(request()->get('search'))
             ->latest();
     }
 
     public function export()
     {
         // Data Selected
-        $users = $this->getSelected();
+        $ip_addresses = $this->getSelected();
 
         // Selected Column in table
         $columns = [];
@@ -152,8 +146,8 @@ class AdminTable extends DataTableComponent
 
         $this->clearSelected();
         return Excel::download(
-            new AdminExport($users, $finalSelectQuery, $finalHeaders),
-            now().'_admin.xlsx'
+            new IpExport($ip_addresses , $finalSelectQuery, $finalHeaders),
+            now().'_ip-address.xlsx'
         );
     }
 

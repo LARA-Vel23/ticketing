@@ -2,19 +2,19 @@
 
 namespace App\Livewire;
 
-use App\Exports\AdminExport;
+use App\Exports\PermissionExport;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\User;
+use App\Models\Permission;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
 use Maatwebsite\Excel\Facades\Excel;
 
-class AdminTable extends DataTableComponent
+class PermissionTable extends DataTableComponent
 {
-    protected $model = User::class;
+    protected $model = Permission::class;
 
     use LivewireAlert;
 
@@ -30,9 +30,7 @@ class AdminTable extends DataTableComponent
             ->setBulkActions([
                 'export' => 'Export',
                 'confirmDialog' => 'Delete',
-            ])
-
-        ;
+            ]);
     }
 
     public function columns(): array
@@ -43,13 +41,9 @@ class AdminTable extends DataTableComponent
             Column::make("Name", "name")
                 ->sortable()
                 ->searchable(),
-            Column::make("Email", "email")
+            Column::make("Description", "description")
                 ->sortable()
                 ->searchable(),
-            Column::make('Status', 'status')
-                ->format(function($status){
-                    return $status == 1 ? 'Active' : 'Deactivated';
-                }),
             Column::make("Date Created", "created_at")
                 ->format(function($timestamp){
                     $timestamp = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, 'UTC')
@@ -64,7 +58,7 @@ class AdminTable extends DataTableComponent
             ->sortable(),
             Column::make('Actions', 'id')
                 ->format(function($value, $column, $row) {
-                    return view('pages.admin.admin.action', compact('value', 'column', 'row'));
+                    return view('pages.admin.permission.action', compact('value', 'column', 'row'));
                 })
                 ->excludeFromColumnSelect(),
         ];
@@ -72,17 +66,15 @@ class AdminTable extends DataTableComponent
 
     public function builder(): Builder
     {
-        return User::query()
-            ->isAdmin()
-            ->search(request()->get('search'))
-            ->filterStatus(request()->get('status'))
+        return Permission::query()
+            // ->search(request()->get('search'))
             ->latest();
     }
 
     public function export()
     {
         // Data Selected
-        $users = $this->getSelected();
+        $permissions = $this->getSelected();
 
         // Selected Column in table
         $columns = [];
@@ -152,8 +144,8 @@ class AdminTable extends DataTableComponent
 
         $this->clearSelected();
         return Excel::download(
-            new AdminExport($users, $finalSelectQuery, $finalHeaders),
-            now().'_admin.xlsx'
+            new PermissionExport($permissions, $finalSelectQuery, $finalHeaders),
+            now().'_permission.xlsx'
         );
     }
 
@@ -161,7 +153,7 @@ class AdminTable extends DataTableComponent
     public function delete()
     {
         try{
-            User::whereIn('id', $this->getSelected())->delete();
+            Permission::whereIn('id', $this->getSelected())->delete();
         }catch(\Exception $e){
             $this->alert('error', 'Something went wrong please try again later.', [
                 'toast' => true,
