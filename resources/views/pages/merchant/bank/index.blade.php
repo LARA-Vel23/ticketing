@@ -50,7 +50,7 @@
                         </select>
                     </div>
                 </form>
-                <div class="table-responsive tableFixHead" style="height: 347px; width:100%;">
+                <div class="table-responsive tableFixHead">
                     <table class="table table-hover align-middle m-0">
                         <thead>
                             <tr class="d-flex justify-content-center text-uppercase">

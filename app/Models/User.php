@@ -46,6 +46,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function scopeIsAdmin($query)
+    {
+        return $query->where('is_admin', 1);
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->when($search, function($query) use($search){
