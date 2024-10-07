@@ -13,7 +13,6 @@ class PermissionController extends Controller
     private $limit = 10;
     public function index(): View
     {
-        // dd(Permission::all());
         $permissions = Permission::query()
             // ->search(request()->get('search'))
             // // ->filterStatus(request()->get('status'))

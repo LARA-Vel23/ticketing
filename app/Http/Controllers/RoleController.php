@@ -13,13 +13,12 @@ class RoleController extends Controller
     private $limit = 10;
     public function index(): View
     {
-        // dd(Permission::all());
         $roles = Role::query()
             // ->search(request()->get('search'))
             // // ->filterStatus(request()->get('status'))
             // ->latest()
             ->paginate(request()->get('limit') ? request()->get('limit') : $this->limit);
-        return view('pages.admin.roles.index', compact('roles'));
+        return view('pages.admin.role.index', compact('roles'));
     }
 
     public function create(): View
