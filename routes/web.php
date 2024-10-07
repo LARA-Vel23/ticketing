@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\BankController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +24,8 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('/admin', UserController::class);
+Route::resource('/permission', PermissionController::class);
+Route::resource('/role', RoleController::class);
+Route::resource('/merchant', MerchantController::class);
+Route::resource('/bank', BankController::class);
+Route::resource('/transaction', TransactionController::class);

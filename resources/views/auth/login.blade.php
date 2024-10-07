@@ -1,73 +1,352 @@
-@extends('layouts.app')
-
+@extends('layouts.app2')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+        body{
+            background-color: #c9d6ff;
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+        .container{
+            background-color: #fff;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 768px;
+            min-height: 480px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+        .container p{
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0.3px;
+            margin: 20px 0;
+        }
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+        .container span{
+            font-size: 12px;
+        }
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+        .container a{
+            color: #333;
+            font-size: 13px;
+            text-decoration: none;
+            margin: 1px 0 1px;
+        }
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+        .container button {
+            color: #fff;
+            font-size: 12px;
+            padding: 10px 45px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+        .container button.hidden{
+            background-color: transparent;
+            border-color: #fff;
+        }
 
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+        .container form{
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            height: 100%;
+        }
 
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
+        .container input{
+            background-color: #eee;
+            border: none;
+            margin: 8px 0;
+            padding: 10px 15px;
+            font-size: 13px;
+            border-radius: 0px;
+            width: 100%;
+            outline: none;
+        }
 
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+        .form-container{
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .sign-in{
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+
+        .container.active .sign-in{
+            transform: translateX(100%);
+        }
+
+        .sign-up{
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .container.active .sign-up{
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+            animation: move 0.6s;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+
+        @keyframes move{
+            0%, 49.99%{
+                opacity: 0;
+                z-index: 1;
+            }
+            50%, 100%{
+                opacity: 1;
+                z-index: 5;
+            }
+        }
+
+        .social-icons{
+            margin: 20px 0;
+        }
+
+        .social-icons a{
+            border: 1px solid #ccc;
+            border-radius: 20%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 3px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .toggle-container{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: all 0.6s ease-in-out;
+            border-radius: 150px 0 0 100px;
+            z-index: 1000;
+        }
+
+        .container.active .toggle-container{
+            transform: translateX(-100%);
+            border-radius: 0 150px 100px 0;
+        }
+
+        .toggle{
+            background-color: #0d0b8b;
+            height: 100%;
+            background: linear-gradient(to right, #0aacec, #0c27bd);
+            color: #fff;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: all 0.6s ease-in-out;
+        }
+
+        .container.active .toggle{
+            transform: translateX(50%);
+        }
+
+        .toggle-panel{
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 30px;
+            text-align: center;
+            top: 0;
+            transform: translateX(0);
+            transition: all 0.6s ease-in-out;
+        }
+
+        .toggle-left{
+            transform: translateX(-200%);
+        }
+
+        .container.active .toggle-left{
+            transform: translateX(0);
+        }
+
+        .toggle-right{
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .container.active .toggle-right{
+            transform: translateX(200%);
+        }
+    </style>
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+                <div><h1 class="fw-bold">{{ __('Create Account') }}</h1></div>
+                <span>{{ __('Use your email for registeration') }}</span>
+                <input
+                    id="name"
+                    type="text"
+                    class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"
+                    required
+                    autocomplete="name"
+                    autofocus
+                    placeholder="Name"
+                >
+                @error('name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+                <input
+                    id="email"
+                    type="email"
+                    class="form-control @error('email') is-invalid @enderror"
+                    name="email"
+                    value="{{ old('email') }}"
+                    required
+                    autocomplete="email"
+                    placeholder="Email"
+                >
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+                <input
+                    id="password"
+                    type="password"
+                    class="form-control @error('password') is-invalid @enderror" name="password"
+                    required
+                    autocomplete="new-password"
+                    placeholder="Password"
+                >
+                @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+
+                <input
+                    id="password-confirm"
+                    type="password"
+                    class="form-control"
+                    name="password_confirmation"
+                    required
+                    autocomplete="new-password"
+                    placeholder="Confirm Password"
+                >
+                <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
+            </form>
+        </div>
+        <div class="form-container sign-in">
+            <form class="" method="POST" action="{{ route('login') }}">
+	            @csrf
+                <div class="d-flex align-items-center justify-content-center">
+                    <h1 class="fw-bold">{{ __('Login') }}</h1>
+                </div>
+
+                <label for="email" class="pt-3">{{ __('Email') }}</label>
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="Email"
+                    type="email"
+                    class="form-control @error('email') is-invalid @enderror"
+                    name="email"
+                    value="{{ old('email') }}"
+                    autocomplete="email"
+                    autofocus
+                    required
+                >
+
+                <label for="email" class="pt-2">{{ __('Password') }}</label>
+                <input
+                    id="password"
+                    type="password"
+                    class="form-control @error('password') is-invalid @enderror"
+                    name="password"
+                    required
+                    placeholder="Password"
+                    autocomplete="current-password"
+                >
+
+                {{-- <a href="#">Forget Your Password?</a> --}}
+                @if (Route::has('password.request'))
+                    <a href="{{ route('password.request') }}">
+                        {{ __('Forgot Your Password?') }}
+                    </a>
+                @endif
+                <button type="submit" class="btn btn-primary">{{ __('Log in') }}</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <div class="d-flex justify-content-center align-items-center mb-2">
+                        <img src="{{url('/images/logo.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
+                    </div>
+                    {{-- <h1>Welcome Back!</h1> --}}
+                    <p>Enter your personal details to use all of site features</p>
+                    <button class="hidden" id="login">Log In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <div class="d-flex justify-content-center align-items-center mb-2">
+                        <img src="{{url('/images/logo.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
+                    </div>
+                    {{-- <h1>Hello, Friend!</h1> --}}
+                    <p>Register with your personal details to use all of site features</p>
+                    <button class="hidden" id="register">Register</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

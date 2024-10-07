@@ -6,15 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class Role extends Model
+class Bank extends Model
 {
     use HasFactory;
 
-    protected $table = 'roles';
+    protected $table = 'banks';
 
     protected $fillable = [
+        'user_id',
         'name',
-        'description',
+        'account_name',
+        'account_number',
+        'bank_ifsc',
+        'bank_swift',
+        'bank_branch',
+        'bank_branch_code',
+        'status',
+        'is_system_generated',
         'created_at',
         'updated_at'
     ];

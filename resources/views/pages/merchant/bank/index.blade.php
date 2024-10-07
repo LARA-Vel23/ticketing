@@ -15,10 +15,10 @@
                 </li>
             </ol>
         </nav> --}}
-        <div class="rounded-3 shadow-sm bg-white">
+        <div class="rounded-3 shadow-sm bg-white" style="height: auto;">
             <div class="d-flex flex-column gap-3 p-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="poppins-semibold mb-0">{{ __('Merchant') }}</h4>
+                    <h4 class="poppins-semibold mb-0">{{ __('Banks') }}</h4>
                     <div>
                         <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Export" href="#?{{ http_build_query(request()->all()) }}" class="btn btn-success align-self-center">
                             <i class="bi bi-filetype-csv"></i>
@@ -53,25 +53,35 @@
                 <div class="table-responsive tableFixHead" style="height: 347px; width:100%;">
                     <table class="table table-hover align-middle m-0">
                         <thead>
-                            <tr class="text-uppercase">
-                                <th style="font-size:0.6em;">{{ __('Name') }}</th>
-                                <th style="font-size:0.6em;">{{ __('Email') }}</th>
-                                <th style="font-size:0.6em;">{{ __('Role') }}</th>
-                                <th style="font-size:0.6em;">{{ __('Status') }}</th>
-                                <th style="font-size:0.6em;">{{ __('Date Created') }}</th>
-                                <th style="font-size:0.6em;">{{ __('Last Modified') }}</th>
-                                <th class="text-center" style="font-size:0.6em;">{{ __('Manage') }}</th>
+                            <tr class="d-flex justify-content-center text-uppercase">
+                                <th class="col" style="font-size:0.6em;">{{ __('User ID') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Name') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Account Name') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Account Number') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Bank ifsc') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Bank Swift') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Bank Branch') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Bank Branch Code') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Status') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Date Created') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Last Modified') }}</th>
+                                <th class="col" style="font-size:0.6em;">{{ __('Manage') }}</th>
                             </tr>
                         </thead>
                       <tbody>
-                        @forelse ($merchants as $merchant)
+                        @forelse ($banks as $bank)
                             <tr>
-                                <td>{{ $merchant->name }}</td>
-                                <td>{{ $merchant->email }}</td>
-                                <td>{!! $merchant->user_roles !!}</td>
-                                <td>{{ $merchant->readable_status }}</td>
-                                <td>{{ $merchant->readable_created_date }}</td>
-                                <td>{{ $merchant->readable_updated_date }}</td>
+                                <td>{{ $bank->user_id }}</td>
+                                <td>{{ $bank->name }}</td>
+                                <td>{{ $bank->account_name }}</td>
+                                <td>{{ $bank->account_number }}</td>
+                                <td>{{ $bank->bank_ifsc }}</td>
+                                <td>{{ $bank->bank_swift }}</td>
+                                <td>{{ $bank->bank_branch }}</td>
+                                <td>{{ $bank->bank_branch_code }}</td>
+                                <td>{{ $bank->status }}</td>
+                                <td>{{ $bank->readable_created_date }}</td>
+                                <td>{{ $bank->readable_updated_date }}</td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-3 align-items-center">
                                         <a href="javascript:void(0);" style="font-size: 1.2em;" class="text-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Show Data">
@@ -104,13 +114,12 @@
                 </div>
                 <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-center align-items-md-center p-3">
                     <div>
-                        Showing {{($merchants->currentpage()-1)*$merchants->perpage()+1}} to {{$merchants->currentpage()*$merchants->perpage()}}
-                        of  {{$merchants->total()}} entries
+                        Showing {{($banks->currentpage()-1)*$banks->perpage()+1}} to {{$banks->currentpage()*$banks->perpage()}}
+                        of  {{$banks->total()}} entries
                     </div>
-                    {{ $merchants->withQueryString()->links() }}
+                    {{ $banks->withQueryString()->links() }}
                 </div>
             </div>
-
         </div>
     </div>
 @endsection
