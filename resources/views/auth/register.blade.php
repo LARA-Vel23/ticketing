@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Modern Login Page | AsmrProg</title>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -233,61 +232,28 @@
         <div class="form-container sign-up">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
-                <div><h1 class="fw-bold">{{ __('Create Account') }}</h1></div>
-                <span>Use your email for registeration</span>
-                <input
-                    id="name"
-                    type="text"
-                    class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"
-                    required
-                    autocomplete="name"
-                    autofocus
-                    placeholder="Name"
-                >
-                @error('name')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+                <div><h1 class="fw-bold">{{ __('Forgot Password') }}</h1></div>
+
+                <div class="d-flex justify-content-center align-items-center mb-2">
+                    <img src="{{url('/images/forgotpassword.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
+                </div>
+                <span>Use your registered email</span>
                 <input
                     id="email"
                     type="email"
-                    class="form-control @error('email') is-invalid @enderror"
-                    name="email"
-                    value="{{ old('email') }}"
+                    class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
                     required
                     autocomplete="email"
-                    placeholder="Email"
+                    autofocus
+                    placeholder="Email Address"
                 >
                 @error('email')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
-                <input
-                    id="password"
-                    type="password"
-                    class="form-control @error('password') is-invalid @enderror" name="password"
-                    required
-                    autocomplete="new-password"
-                    placeholder="New Password"
-                >
-                @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
 
-                <input
-                    id="password-confirm"
-                    type="password"
-                    class="form-control"
-                    name="password_confirmation"
-                    required
-                    autocomplete="new-password"
-                    placeholder="Confirm Password"
-                >
-                <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Send Password Reset Link') }}</button>
             </form>
         </div>
         <div class="form-container sign-in">

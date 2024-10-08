@@ -5,61 +5,28 @@
             <div class="form-container sign-up">
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
-                    <div><h1 class="fw-bold">{{ __('Create Account') }}</h1></div>
-                    <span>{{ __('Use your email for registeration') }}</span>
-                    <input
-                        id="name"
-                        type="text"
-                        class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"
-                        required
-                        autocomplete="name"
-                        autofocus
-                        placeholder="Name"
-                    >
-                    @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                    <div><h1 class="fw-bold">{{ __('Forgot Password?') }}</h1></div>
+
+                    <div class="d-flex justify-content-center align-items-center mb-2">
+                        <img src="{{url('/images/forgotpassword.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
+                    </div>
+
                     <input
                         id="email"
                         type="email"
-                        class="form-control @error('email') is-invalid @enderror"
-                        name="email"
-                        value="{{ old('email') }}"
+                        class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
                         required
                         autocomplete="email"
-                        placeholder="Email"
+                        autofocus
+                        placeholder="Email Address"
                     >
                     @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
-                    <input
-                        id="password"
-                        type="password"
-                        class="form-control @error('password') is-invalid @enderror" name="password"
-                        required
-                        autocomplete="new-password"
-                        placeholder="Password"
-                    >
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
 
-                    <input
-                        id="password-confirm"
-                        type="password"
-                        class="form-control"
-                        name="password_confirmation"
-                        required
-                        autocomplete="new-password"
-                        placeholder="Confirm Password"
-                    >
-                    <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Send Password Reset Link') }}</button>
                 </form>
             </div>
             <div class="form-container sign-in">
@@ -110,16 +77,16 @@
                             <img src="{{url('/images/login_card.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
                         </div>
                         {{-- <h1>Welcome Back!</h1> --}}
-                        <p>Enter your personal details to use all of site features</p>
-                        <button class="hidden" id="login">Log In</button>
+                        <p>{{ __('Use your registered email to reset password') }}</p>
+                        <button class="hidden" id="login">{{ __('Log In') }}</button>
                     </div>
                     <div class="toggle-panel toggle-right">
                         <div class="d-flex justify-content-center align-items-center mb-2">
                             <img src="{{url('/images/login_card.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
                         </div>
                         {{-- <h1>Hello, Friend!</h1> --}}
-                        <p>Register with your personal details to use all of site features</p>
-                        <button class="hidden" id="register">Register</button>
+                        <p>{{ __('Enter your personal details to use all of site features') }}</p>
+                        <button class="hidden" id="register">{{ __('Forgot Password') }}</button>
                     </div>
                 </div>
             </div>

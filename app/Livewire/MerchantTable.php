@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Exports\AdminExport;
+use App\Exports\MerchantExport;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\User;
@@ -12,7 +12,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
 use Maatwebsite\Excel\Facades\Excel;
 
-class AdminTable extends DataTableComponent
+class MerchantTable extends DataTableComponent
 {
     protected $model = User::class;
 
@@ -30,9 +30,7 @@ class AdminTable extends DataTableComponent
             ->setBulkActions([
                 'export' => 'Export',
                 'confirmDialog' => 'Delete',
-            ])
-
-        ;
+            ]);
     }
 
     public function columns(): array
@@ -64,7 +62,7 @@ class AdminTable extends DataTableComponent
             ->sortable(),
             Column::make('Actions', 'id')
                 ->format(function($value, $column, $row) {
-                    return view('pages.admin.admin.action', compact('value', 'column', 'row'));
+                    return view('pages.admin.merchant.action', compact('value', 'column', 'row'));
                 })
                 ->excludeFromColumnSelect(),
         ];
@@ -73,7 +71,7 @@ class AdminTable extends DataTableComponent
     public function builder(): Builder
     {
         return User::query()
-            ->isAdmin()
+            ->where('is_admin', 0)
             ->search(request()->get('search'))
             ->filterStatus(request()->get('status'))
             ->latest();
@@ -152,8 +150,8 @@ class AdminTable extends DataTableComponent
 
         $this->clearSelected();
         return Excel::download(
-            new AdminExport($users, $finalSelectQuery, $finalHeaders),
-            now().'_admin.xlsx'
+            new MerchantExport($users, $finalSelectQuery, $finalHeaders),
+            now().'_merchant.xlsx'
         );
     }
 
@@ -186,4 +184,5 @@ class AdminTable extends DataTableComponent
             'allowOutsideClick' => false
         ]);
     }
+
 }

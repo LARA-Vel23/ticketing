@@ -1,93 +1,113 @@
-@extends('layouts.app2')
+@extends('layouts.guest')
 @section('content')
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
-
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        body{
-            background-color: #c9d6ff;
-            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container{
-            background-color: #fff;
-            border-radius: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-            position: relative;
-            overflow: hidden;
-            width: 768px;
-            max-width: 100%;
-            min-height: 450px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 20px;
-            }
-
-            .container {
-                padding: 20px;
-            }
-        }
-
-    </style>
-    <div class="container" id="container">
-        <div class="d-flex pt-3" style="height:100%; align-items: start; justify-content: center;">
-            <div class="col-8">
-                <div class="d-flex justify-content-center flex-column">
-                    <div class="fw-bold" style="font-size:2em;">
-                        Forgot your
-                    </div>
-                    <div class="fw-bold" style="font-size:2em;">
-                        Password?
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <img src="{{url('/images/forgotpassword.png')}}" alt="logo" class="responsive-logo" style="width: 200px; height:100%;">
-                </div>
-                <form method="POST" action="{{ route('password.email') }}">
+    <div id="authentication">
+        <div class="container" id="container">
+            <div class="form-container sign-up">
+                <form method="POST" action="{{ route('register') }}">
                     @csrf
-                    <div class="d-flex flex-column align-items-center justify-content-center py-3">
-                        <input
-                            id="email"
-                            type="email"
-                            class="form-control @error('email') is-invalid @enderror"
-                            name="email"
-                            value="{{ old('email') }}"
-                            required
-                            autocomplete="email"
-                            autofocus
-                            placeholder="Email Address"
-                        >
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                        <div class="pt-3">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Send Password Reset Link') }}
-                            </button>
-                        </div>
+                    <div><h1 class="fw-bold">{{ __('Forgot Password?') }}</h1></div>
+
+                    <div class="d-flex justify-content-center align-items-center mb-2">
+                        <img src="{{url('/images/forgotpassword.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
                     </div>
+                    <input
+                        id="email"
+                        type="email"
+                        class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
+                        required
+                        autocomplete="email"
+                        autofocus
+                        placeholder="Email Address"
+                    >
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+
+                    <button type="submit" class="btn btn-primary">{{ __('Send Password Reset Link') }}</button>
                 </form>
             </div>
-        </div>
+            <div class="form-container sign-in">
+                <form class="" method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="d-flex align-items-center justify-content-center">
+                        <h1 class="fw-bold">{{ __('Login') }}</h1>
+                    </div>
 
+                    <label for="email" class="pt-3">{{ __('Email') }}</label>
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="Email"
+                        type="email"
+                        class="form-control @error('email') is-invalid @enderror"
+                        name="email"
+                        value="{{ old('email') }}"
+                        autocomplete="email"
+                        autofocus
+                        required
+                    >
+
+                    <label for="email" class="pt-2">{{ __('Password') }}</label>
+                    <input
+                        id="password"
+                        type="password"
+                        class="form-control @error('password') is-invalid @enderror"
+                        name="password"
+                        required
+                        placeholder="Password"
+                        autocomplete="current-password"
+                    >
+                    {{-- <a href="#">Forget Your Password?</a> --}}
+                    @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
+                    @endif
+                    <button type="submit" class="btn btn-primary">{{ __('Log In') }}</button>
+                </form>
+            </div>
+            <div class="toggle-container">
+                <div class="toggle">
+                    <div class="toggle-panel toggle-left">
+                        <div class="d-flex justify-content-center align-items-center mb-2">
+                            <img src="/images/login_card.png" alt="logo" class="responsive-logo" style="width: 200px; ">
+                        </div>
+                        {{-- <h1>Welcome Back!</h1> --}}
+                        <p>{{ __('Use your registered email to reset password') }}</p>
+                        <button class="hidden" id="login">{{ __('Log In') }}</button>
+                    </div>
+                    <div class="toggle-panel toggle-right active">
+
+                        <div class="d-flex justify-content-center align-items-center mb-2">
+                            <img src="/images/login_card.png" alt="logo" class="responsive-logo" style="width: 200px; ">
+                        </div>
+                        {{-- <h1>Hello, Friend!</h1> --}}
+                        <p>{{ __('Enter your personal details to use all of site features') }}</p>
+                        <button class="hidden" id="register">{{ __('Forgot Password') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        const container = document.getElementById('container');
+        const registerBtn = document.getElementById('register');
+        const loginBtn = document.getElementById('login');
+
+        registerBtn.addEventListener('click', () => {
+            container.classList.add("active");
+        });
+
+        loginBtn.addEventListener('click', () => {
+            container.classList.remove("active");
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            container.classList.add("active");
+        });
+    </script>
+@endpush
+
