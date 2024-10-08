@@ -5,22 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Services\UserService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
+    public $service;
 
-    private $limit = 10;
+    public function __construct()
+    {
+        $this->service = (new UserService);
+    }
+
     public function index(): View
     {
-        $users = User::query()
-            ->where('is_admin', 1)
-            ->search(request()->get('search'))
-            ->filterStatus(request()->get('status'))
-            ->latest()
-            ->paginate(request()->get('limit') ? request()->get('limit') : $this->limit);
-        return view('pages.admin.admin.index', compact('users'));
+        return view('pages.admin.admin.index');
     }
 
     public function create(): View
@@ -30,22 +30,24 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        return redirect()->back()->withSuccess('Module Created Successfully!');
+        $this->service->store($request->validated());
+        return redirect()->back()->withSuccess('Admin Created Successfully!');
     }
 
-    public function show(User $user): View
+    // public function show(User $user): View
+    // {
+    //     return view('pages.admin.admin.show', compact('data'));
+    // }
+
+    public function edit(User $admin): View
     {
-        return view('pages.admin.admin.show', compact('data'));
+        return view('pages.admin.admin.edit', compact('admin'));
     }
 
-    public function edit(User $user): View
+    public function update(UpdateUserRequest $request, User $admin): RedirectResponse
     {
-        return view('pages.admin.admin.edit', compact('data'));
-    }
-
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse
-    {
-        return redirect()->back()->withSuccess('Module Updated Successfully!');
+        $this->service->update($request->validated(), $admin);
+        return redirect()->back()->withSuccess('Admin Updated Successfully!');
     }
 
     public function destroy(User $user): RedirectResponse

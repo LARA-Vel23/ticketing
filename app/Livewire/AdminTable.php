@@ -31,7 +31,11 @@ class AdminTable extends DataTableComponent
                 'export' => 'Export',
                 'confirmDialog' => 'Delete',
             ])
-
+            ->setConfigurableAreas([
+                'toolbar-right-start' => [
+                    'pages.admin.admin.add',
+                ],
+            ])
         ;
     }
 
@@ -108,9 +112,7 @@ class AdminTable extends DataTableComponent
         if(count($columns) == 7){
             unset($columns[count($columns)-1]);
         }
-        if(count($finalSelectQuery) == 7){
-            unset($finalSelectQuery[count($finalSelectQuery)-1]);
-        }
+        unset($finalSelectQuery[count($finalSelectQuery)-1]);
 
         // Header of exported excell
         $headersForComparison = [];

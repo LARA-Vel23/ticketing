@@ -100,9 +100,7 @@ class PermissionTable extends DataTableComponent
         if(count($columns) == 7){
             unset($columns[count($columns)-1]);
         }
-        if(count($finalSelectQuery) == 7){
-            unset($finalSelectQuery[count($finalSelectQuery)-1]);
-        }
+        unset($finalSelectQuery[count($finalSelectQuery)-1]);
 
         // Header of exported excell
         $headersForComparison = [];
