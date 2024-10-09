@@ -3,23 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\IP;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreIpRequest;
+use App\Http\Requests\UpdateIpRequest;
+use App\Services\IPService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class IpController extends Controller
 {
-    private $limit = 10;
+    public $service;
+
+    public function __construct()
+    {
+        $this->service = (new IPService);
+    }
+
     public function index(): View
     {
-        $ip_addresses = IP::query()
-            // ->where('is_admin', 0)
-            // ->search(request()->get('search'))
-            // ->filterStatus(request()->get('status'))
-            ->latest()
-            ->paginate(request()->get('limit') ? request()->get('limit') : $this->limit);
-        return view('pages.admin.ip.index', compact('ip_addresses'));
+        return view('pages.admin.ip.index');
     }
 
     public function create(): View
@@ -27,29 +28,20 @@ class IpController extends Controller
         return view('pages.admin.ip.create');
     }
 
-    public function store(StoreUserRequest $request): RedirectResponse
+    public function store(StoreIpRequest $request): RedirectResponse
     {
-        return redirect()->back()->withSuccess('Module Created Successfully!');
-    }
-
-    public function show(IP $ip): View
-    {
-        return view('pages.admin.ip.show', compact('data'));
+        $this->service->store($request->validated());
+        return redirect()->back()->withSuccess('IP Address Created Successfully!');
     }
 
     public function edit(IP $ip): View
     {
-        return view('pages.admin.ip.edit', compact('data'));
+        return view('pages.admin.ip.edit', compact('ip'));
     }
 
-    public function update(UpdateUserRequest $request, IP $ip): RedirectResponse
+    public function update(UpdateIpRequest $request, IP $ip): RedirectResponse
     {
-        return redirect()->back()->withSuccess('Module Updated Successfully!');
-    }
-
-    public function destroy(IP $ip): RedirectResponse
-    {
-        $ip->delete();
-        return redirect()->back()->withSuccess('Module Deleted Successfully!');
+        $this->service->update($request->validated(), $ip);
+        return redirect()->back()->withSuccess('IP Address Updated Successfully!');
     }
 }

@@ -8,6 +8,7 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\IP;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
 use Maatwebsite\Excel\Facades\Excel;
@@ -31,7 +32,11 @@ class IPTable extends DataTableComponent
                 'export' => 'Export',
                 'confirmDialog' => 'Delete',
             ])
-
+            ->setConfigurableAreas([
+                'toolbar-right-start' => [
+                    'pages.admin.ip.add',
+                ],
+            ])
         ;
     }
 
@@ -39,12 +44,8 @@ class IPTable extends DataTableComponent
     {
         return [
             Column::make("Id", "id")
-            ->sortable(),
-            Column::make("User ID", "user_id")
-                ->sortable()
-                ->searchable(),
+                ->sortable(),
             Column::make("Value", "value")
-                ->sortable()
                 ->searchable(),
             Column::make("Date Created", "created_at")
                 ->format(function($timestamp){
@@ -68,15 +69,13 @@ class IPTable extends DataTableComponent
 
     public function builder(): Builder
     {
-        return IP::query()
-            // ->search(request()->get('search'))
-            ->latest();
+        return IP::query()->latest();
     }
 
     public function export()
     {
         // Data Selected
-        $ip_addresses = $this->getSelected();
+        $permissions = $this->getSelected();
 
         // Selected Column in table
         $columns = [];
@@ -144,8 +143,8 @@ class IPTable extends DataTableComponent
 
         $this->clearSelected();
         return Excel::download(
-            new IpExport($ip_addresses , $finalSelectQuery, $finalHeaders),
-            now().'_ip-address.xlsx'
+            new IPExport($permissions, $finalSelectQuery, $finalHeaders),
+            now().'_permission.xlsx'
         );
     }
 
@@ -153,7 +152,7 @@ class IPTable extends DataTableComponent
     public function delete()
     {
         try{
-            User::whereIn('id', $this->getSelected())->delete();
+            IP::whereIn('id', $this->getSelected())->delete();
         }catch(\Exception $e){
             $this->alert('error', 'Something went wrong please try again later.', [
                 'toast' => true,

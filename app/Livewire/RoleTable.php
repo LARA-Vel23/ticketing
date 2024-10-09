@@ -31,6 +31,11 @@ class RoleTable extends DataTableComponent
                 'export' => 'Export',
                 'confirmDialog' => 'Delete',
             ])
+            ->setConfigurableAreas([
+                'toolbar-right-start' => [
+                    'pages.admin.role.add',
+                ],
+            ])
         ;
     }
 
@@ -38,12 +43,11 @@ class RoleTable extends DataTableComponent
     {
         return [
             Column::make("Id", "id")
-            ->sortable(),
+                ->sortable(),
             Column::make("Name", "name")
                 ->sortable()
                 ->searchable(),
             Column::make("Description", "description")
-                ->sortable()
                 ->searchable(),
             Column::make("Date Created", "created_at")
                 ->format(function($timestamp){
@@ -67,15 +71,13 @@ class RoleTable extends DataTableComponent
 
     public function builder(): Builder
     {
-        return Role::query()
-            // ->search(request()->get('search'))
-            ->latest();
+        return Role::query()->latest();
     }
 
     public function export()
     {
         // Data Selected
-        $roles = $this->getSelected();
+        $users = $this->getSelected();
 
         // Selected Column in table
         $columns = [];
@@ -143,7 +145,7 @@ class RoleTable extends DataTableComponent
 
         $this->clearSelected();
         return Excel::download(
-            new RoleExport($roles, $finalSelectQuery, $finalHeaders),
+            new RoleExport($users, $finalSelectQuery, $finalHeaders),
             now().'_role.xlsx'
         );
     }

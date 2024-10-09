@@ -30,7 +30,13 @@ class PermissionTable extends DataTableComponent
             ->setBulkActions([
                 'export' => 'Export',
                 'confirmDialog' => 'Delete',
-            ]);
+            ])
+            ->setConfigurableAreas([
+                'toolbar-right-start' => [
+                    'pages.admin.permission.add',
+                ],
+            ])
+        ;
     }
 
     public function columns(): array
@@ -42,7 +48,6 @@ class PermissionTable extends DataTableComponent
                 ->sortable()
                 ->searchable(),
             Column::make("Description", "description")
-                ->sortable()
                 ->searchable(),
             Column::make("Date Created", "created_at")
                 ->format(function($timestamp){
@@ -66,9 +71,7 @@ class PermissionTable extends DataTableComponent
 
     public function builder(): Builder
     {
-        return Permission::query()
-            // ->search(request()->get('search'))
-            ->latest();
+        return Permission::query()->latest();
     }
 
     public function export()

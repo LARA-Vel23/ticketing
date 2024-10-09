@@ -3,51 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
-use App\Http\Requests\StorePermissionRequest;
-use App\Http\Requests\UpdatePermissionRequest;
+use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
+use App\Services\RoleService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class RoleController extends Controller
 {
-    private $limit = 10;
+    public $service;
+
+    public function __construct()
+    {
+        $this->service = (new RoleService);
+    }
+
     public function index(): View
     {
-        $roles = Role::query()
-            // ->search(request()->get('search'))
-            // // ->filterStatus(request()->get('status'))
-            // ->latest()
-            ->paginate(request()->get('limit') ? request()->get('limit') : $this->limit);
-        return view('pages.admin.role.index', compact('roles'));
+        return view('pages.admin.role.index');
     }
 
     public function create(): View
     {
-        return view('pages.module.create');
+        return view('pages.admin.role.create');
     }
 
-    // public function store(StoreRoleRequest $request): RedirectResponse
-    // {
-    //     return redirect()->back()->withSuccess('Module Created Successfully!');
-    // }
-
-    // public function show(Role $role): View
-    // {
-    //     return view('pages.module.show', compact('data'));
-    // }
-
-    // public function edit(Role $role): View
-    // {
-    //     return view('pages.module.show', compact('data'));
-    // }
-
-    // public function update(UpdateRoleRequest $request, Role $role): RedirectResponse
-    // {
-    //     return redirect()->back()->withSuccess('Module Updated Successfully!');
-    // }
-
-    public function destroy(Role $role): RedirectResponse
+    public function store(StoreRoleRequest $request): RedirectResponse
     {
-        return redirect()->back()->withSuccess('Module Deleted Successfully!');
+        $this->service->store($request->validated());
+        return redirect()->back()->withSuccess('Role Created Successfully!');
+    }
+
+    public function edit(Role $role): View
+    {
+        return view('pages.admin.role.edit', compact('role'));
+    }
+
+    public function update(UpdateRoleRequest $request, Role $role): RedirectResponse
+    {
+        $this->service->update($request->validated(), $role);
+        return redirect()->back()->withSuccess('Role Updated Successfully!');
     }
 }

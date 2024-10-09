@@ -5,49 +5,43 @@ namespace App\Http\Controllers;
 use App\Models\Permission;
 use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
+use App\Services\PermissionService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class PermissionController extends Controller
 {
-    private $limit = 10;
+    public $service;
+
+    public function __construct()
+    {
+        $this->service = (new PermissionService);
+    }
+
     public function index(): View
     {
-        $permissions = Permission::query()
-            // ->search(request()->get('search'))
-            // // ->filterStatus(request()->get('status'))
-            // ->latest()
-            ->paginate(request()->get('limit') ? request()->get('limit') : $this->limit);
-        return view('pages.admin.permission.index', compact('permissions'));
+        return view('pages.admin.permission.index');
     }
 
     public function create(): View
     {
-        return view('pages.module.create');
+        return view('pages.admin.permission.create');
     }
 
     public function store(StorePermissionRequest $request): RedirectResponse
     {
-        return redirect()->back()->withSuccess('Module Created Successfully!');
-    }
-
-    public function show(Permission $permission): View
-    {
-        return view('pages.module.show', compact('data'));
+        $this->service->store($request->validated());
+        return redirect()->back()->withSuccess('Permission Created Successfully!');
     }
 
     public function edit(Permission $permission): View
     {
-        return view('pages.module.show', compact('data'));
+        return view('pages.admin.permission.edit', compact('permission'));
     }
 
     public function update(UpdatePermissionRequest $request, Permission $permission): RedirectResponse
     {
-        return redirect()->back()->withSuccess('Module Updated Successfully!');
-    }
-
-    public function destroy(Permission $permission): RedirectResponse
-    {
-        return redirect()->back()->withSuccess('Module Deleted Successfully!');
+        $this->service->update($request->validated(), $permission);
+        return redirect()->back()->withSuccess('Permission Updated Successfully!');
     }
 }

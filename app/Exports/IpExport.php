@@ -27,8 +27,6 @@ class IpExport implements FromCollection
         foreach($this->finalSelectQuery as $selectedColumn){
             if($selectedColumn == 'created_at' || $selectedColumn == 'updated_at'){
                 $finalSelectedColumn[] = DB::raw('DATE_FORMAT(DATE_ADD('.$selectedColumn.', INTERVAL 8 hour), "%a %b %d, %Y, %l:%i %p")');
-            } elseif($selectedColumn == 'status'){
-                $finalSelectedColumn[] = DB::raw('CASE WHEN status = 1 THEN "Active" ELSE "Deactivated" END');
             }else {
                 $finalSelectedColumn[] = $selectedColumn;
             }

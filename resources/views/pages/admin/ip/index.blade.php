@@ -17,7 +17,7 @@
                 {{ __('IP Addresses') }}
             </div>
             <div class="card-body">
-                <livewire:role-table />
+                <livewire:ip-table />
             </div>
         </div>
     </div>

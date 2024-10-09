@@ -17,7 +17,7 @@
     <div class="rounded-3 shadow-sm bg-white">
         <div class="card">
             <div class="card-header">
-                {{ __('New') }}
+                {{ __('Edit') }}
             </div>
             <div class="card-body">
                 <x-form-session />

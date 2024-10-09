@@ -22,7 +22,8 @@ class UpdatePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'min:3', 'max:191'],
+            'description' => ['required', 'min:5', 'max:191']
         ];
     }
 }
