@@ -40,19 +40,27 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end pt-0">
                     <div class="dropdown-header text-light fw-semibold rounded-top mb-2" style="background: #212631 !important;">{{ __('Account') }}</div>
-                    <a class="dropdown-item" href="javascript:void(0);">
+                    <a class="dropdown-item" href="{{ route('profile') }}">
                         <i class="cil-user me-2" style="font-size: 1em;"></i>
                         {{ __('Profile') }}
                     </a>
-                    <a class="dropdown-item" href="javascript:void(0);">
+                    <a class="dropdown-item" href="{{ route('profile.change_password') }}">
                         <i class="bi bi-key me-2" style="font-size: 1em;"></i>
                         {{ __('Change Password') }}
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="javascript:void(0);">
+                    <a
+                        class="dropdown-item"
+                        href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"
+                    >
                         <i class="cil-arrow-thick-to-left me-2" style="font-size: 1em;"></i>
                         {{ __('Logout') }}
                     </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
             </li>
         </ul>

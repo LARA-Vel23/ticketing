@@ -187,10 +187,18 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);">
+            <a
+                class="nav-link"
+                href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();"
+            >
                 <i class="nav-icon cil-arrow-thick-to-left"></i>
                 {{ __('Logout') }}
             </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
         </li>
     </ul>
     <div class="sidebar-footer border-top d-none d-md-flex">
