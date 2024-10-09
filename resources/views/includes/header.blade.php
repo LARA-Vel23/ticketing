@@ -55,7 +55,7 @@
                         onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();"
                     >
-                        <i class="cil-arrow-thick-to-left me-2" style="font-size: 1em;"></i>
+                        <i class="cil-power-standby me-2" style="font-size: 1em;"></i>
                         {{ __('Logout') }}
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

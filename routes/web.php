@@ -26,18 +26,30 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 
 Route::group(['middleware' => 'auth'], function(){
-    Route::resource('/admin', UserController::class);
-    Route::resource('/merchant', MerchantController::class);
+    Route::group(['middleware' => 'Admin', 'prefix' => 'admin'], function(){
+        Route::resource('/admin', UserController::class);
+        Route::resource('/merchant', MerchantController::class);
 
-    Route::resource('/permission', PermissionController::class);
-    Route::resource('/role', RoleController::class);
-    Route::resource('/bank', BankController::class);
-    Route::resource('/transaction', TransactionController::class);
-    Route::resource('/ip', IpController::class);
-    Route::get('/profile', function() {
-        return view("pages.admin.profile");
-    })->name('profile');
-    Route::get('/profile_change_password', function() {
-        return view("pages.admin.change_password");
-    })->name('profile.change_password');
+        Route::resource('/permission', PermissionController::class);
+        Route::resource('/role', RoleController::class);
+        Route::resource('/bank', BankController::class);
+        Route::resource('/transaction', TransactionController::class);
+        Route::resource('/ip', IpController::class);
+        Route::get('/profile', function() {
+            return view("pages.admin.profile");
+        })->name('admin.profile');
+        Route::get('/profile_change_password', function() {
+            return view("pages.admin.change_password");
+        })->name('admin.profile.change_password');
+    });
+
+    Route::group(['middleware' => 'Merchant'], function(){
+        Route::get('/dashboard', 'App\Http\Controllers\Merchant\DashboardController@index')->name('dashboard');
+        Route::get('/profile', function() {
+            return view("pages.admin.profile");
+        })->name('profile');
+        Route::get('/profile_change_password', function() {
+            return view("pages.admin.change_password");
+        })->name('profile.change_password');
+    });
 });
