@@ -30,7 +30,13 @@ class MerchantTable extends DataTableComponent
             ->setBulkActions([
                 'export' => 'Export',
                 'confirmDialog' => 'Delete',
-            ]);
+            ])
+            ->setConfigurableAreas([
+                'toolbar-right-start' => [
+                    'pages.admin.merchant.add',
+                ],
+            ])
+        ;
     }
 
     public function columns(): array
@@ -71,7 +77,7 @@ class MerchantTable extends DataTableComponent
     public function builder(): Builder
     {
         return User::query()
-            ->where('is_admin', 0)
+            ->isMerchant()
             ->search(request()->get('search'))
             ->filterStatus(request()->get('status'))
             ->latest();

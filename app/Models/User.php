@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $query->where('is_admin', 1);
     }
 
+    public function scopeIsMerchant($query)
+    {
+        return $query->where('is_admin', 0);
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->when($search, function($query) use($search){

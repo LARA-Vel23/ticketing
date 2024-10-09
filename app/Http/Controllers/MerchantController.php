@@ -3,54 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreMerchantRequest;
+use App\Http\Requests\UpdateMerchantRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use App\Services\MerchantService;
+
 
 class MerchantController extends Controller
 {
 
-    private $limit = 10;
+    public $service;
+
+    public function __construct()
+    {
+        $this->service = (new MerchantService);
+    }
+
     public function index(): View
     {
-        $merchants = User::query()
-            ->where('is_admin', 0)
-            ->search(request()->get('search'))
-            ->filterStatus(request()->get('status'))
-            ->latest()
-            ->paginate(request()->get('limit') ? request()->get('limit') : $this->limit);
-        return view('pages.admin.merchant.index', compact('merchants'));
+        return view('pages.admin.merchant.index');
     }
 
     public function create(): View
     {
-        return view('pages.admin.admin.create');
+        return view('pages.admin.merchant.create');
     }
 
-    public function store(StoreUserRequest $request): RedirectResponse
+    public function store(StoreMerchantRequest $request): RedirectResponse
     {
-        return redirect()->back()->withSuccess('Module Created Successfully!');
+        $this->service->store($request->validated());
+        return redirect()->back()->withSuccess('Merchant Created Successfully!');
+    }
+    public function edit(User $merchant): View
+    {
+        return view('pages.admin.merchant.edit', compact('merchant'));
     }
 
-    public function show(User $user): View
+    public function update(UpdateMerchantRequest $request, User $merchant): RedirectResponse
     {
-        return view('pages.admin.admin.show', compact('data'));
-    }
-
-    public function edit(User $user): View
-    {
-        return view('pages.admin.admin.edit', compact('data'));
-    }
-
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse
-    {
+        $this->service->update($request->validated(), $merchant);
         return redirect()->back()->withSuccess('Module Updated Successfully!');
-    }
-
-    public function destroy(User $user): RedirectResponse
-    {
-        $user->delete();
-        return redirect()->back()->withSuccess('Module Deleted Successfully!');
     }
 }

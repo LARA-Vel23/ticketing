@@ -2,17 +2,21 @@
 
 namespace App\Services;
 
+use App\Mail\AdminRegistered;
 use App\Models\User;
 use App\Models\UserRole;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserService{
 
     public function store(array $data)
     {
+        $password = Str::random(10);
         $user = new User();
         $user->name = $data['name'];
         $user->email = $data['email'];
-        $user->password = bcrypt('password');
+        $user->password = bcrypt($password);
         $user->status = 0;
         $user->save();
 
@@ -23,6 +27,8 @@ class UserService{
             $roles->role_id = $role;
             $roles->save();
         }
+
+        Mail::to($user->email)->send(new AdminRegistered($user, $password));
     }
 
     public function update(array $data, $user)

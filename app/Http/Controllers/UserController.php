@@ -34,11 +34,6 @@ class UserController extends Controller
         return redirect()->back()->withSuccess('Admin Created Successfully!');
     }
 
-    // public function show(User $user): View
-    // {
-    //     return view('pages.admin.admin.show', compact('data'));
-    // }
-
     public function edit(User $admin): View
     {
         return view('pages.admin.admin.edit', compact('admin'));
@@ -48,11 +43,5 @@ class UserController extends Controller
     {
         $this->service->update($request->validated(), $admin);
         return redirect()->back()->withSuccess('Admin Updated Successfully!');
-    }
-
-    public function destroy(User $user): RedirectResponse
-    {
-        $user->delete();
-        return redirect()->back()->withSuccess('Module Deleted Successfully!');
     }
 }
