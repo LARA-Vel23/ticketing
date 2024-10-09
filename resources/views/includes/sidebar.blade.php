@@ -175,13 +175,13 @@
         </li>
         <li class="nav-title">{{ __('My Account') }}</li>
         <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);">
+            <a class="nav-link" href="{{ route('profile') }}">
                 <i class="nav-icon cil-user"></i>
                 {{ __('Profile') }}
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);">
+            <a class="nav-link" href="{{ route('profile.change_password') }}">
                 <i class="nav-icon bi bi-key"></i>
                 {{ __('Change Password') }}
             </a>
