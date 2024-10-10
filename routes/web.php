@@ -6,6 +6,7 @@ use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\IpController;
+use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::resource('/bank', BankController::class);
         Route::resource('/transaction', TransactionController::class);
         Route::resource('/ip', IpController::class);
+        Route::resource('/currency', CurrencyController::class);
         Route::get('/profile', function() {
             return view("pages.admin.profile");
         })->name('admin.profile');
