@@ -2,21 +2,21 @@
 
 namespace App\Livewire;
 
-
-use App\Exports\CountryExport;
+use App\Exports\CurrencyExport;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\Country;
+use App\Models\Currency;
 use App\Models\Transaction;
 use Carbon\Carbon;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
 use Maatwebsite\Excel\Facades\Excel;
 
-class CountryTable extends DataTableComponent
+class CurrencyTable extends DataTableComponent
 {
-    protected $model = Country::class;
+    protected $model = Currency::class;
 
     use LivewireAlert;
 
@@ -35,7 +35,7 @@ class CountryTable extends DataTableComponent
             ])
             ->setConfigurableAreas([
                 'toolbar-right-start' => [
-                    'pages.admin.country.add',
+                    'pages.admin.currency.add',
                 ],
             ])
         ;
@@ -49,9 +49,10 @@ class CountryTable extends DataTableComponent
             Column::make("Name", "name")
                 ->sortable()
                 ->searchable(),
-            Column::make("Timezone", "timezone")
+            Column::make("Code", "code")
                 ->sortable()
                 ->searchable(),
+            Column::make("Sign", "sign"),
             Column::make("Date Created", "created_at")
                 ->format(function($timestamp){
                     $timestamp = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, 'UTC')
@@ -66,7 +67,7 @@ class CountryTable extends DataTableComponent
             ->sortable(),
             Column::make('Actions', 'id')
                 ->format(function($value, $column, $row) {
-                    return view('pages.admin.country.action', compact('value', 'column', 'row'));
+                    return view('pages.admin.currency.action', compact('value', 'column', 'row'));
                 })
                 ->excludeFromColumnSelect(),
         ];
@@ -74,13 +75,13 @@ class CountryTable extends DataTableComponent
 
     public function builder(): Builder
     {
-        return Country::query()->latest();
+        return Currency::query()->latest();
     }
 
     public function export()
     {
         // Data Selected
-        $countries = $this->getSelected();
+        $currencies = $this->getSelected();
 
         // Selected Column in table
         $columns = [];
@@ -148,8 +149,8 @@ class CountryTable extends DataTableComponent
 
         $this->clearSelected();
         return Excel::download(
-            new CountryExport($countries, $finalSelectQuery, $finalHeaders),
-            now().'_country.xlsx'
+            new CurrencyExport($currencies, $finalSelectQuery, $finalHeaders),
+            now().'_currency.xlsx'
         );
     }
 
@@ -157,9 +158,10 @@ class CountryTable extends DataTableComponent
     public function delete()
     {
         try{
-            $transactionCount = Transaction::whereIn('country_id', $this->getSelected())->count();
+            $ids = Currency::whereIn('id', $this->getSelected())->pluck('country_id')->toArray();
+            $transactionCount = Transaction::whereIn('country_id', $ids)->count();
             if($transactionCount < 1){
-                Country::whereIn('id', $this->getSelected())->delete();
+                Currency::whereIn('id', $this->getSelected())->delete();
             } else {
                 $this->alert('warning', 'Deletion of selected data prohibited to avoid future conflicts.', [
                     'toast' => true,
@@ -190,5 +192,4 @@ class CountryTable extends DataTableComponent
             'allowOutsideClick' => false
         ]);
     }
-
 }

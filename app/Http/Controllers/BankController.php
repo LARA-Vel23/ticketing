@@ -3,33 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreIpRequest;
+use App\Http\Requests\UpdateIpRequest;
+use App\Services\BankService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class BankController extends Controller
 {
-    private $limit = 10;
+    public $service;
+
+    public function __construct()
+    {
+        $this->service = (new BankService);
+    }
+
     public function index(): View
     {
-        $banks = Bank::query()
-            // ->where('is_admin', 0)
-            // ->search(request()->get('search'))
-            // ->filterStatus(request()->get('status'))
-            // ->latest()
-            ->paginate(request()->get('limit') ? request()->get('limit') : $this->limit);
-        return view('pages.admin.bank.index', compact('banks'));
+        return view('pages.admin.bank.index');
     }
 
     public function create(): View
     {
-        return view('pages.merchant.bank.create');
+        return view('pages.admin.bank.create');
     }
 
-    public function store(StoreUserRequest $request): RedirectResponse
+    public function store(StoreBankRequest $request): RedirectResponse
     {
-        return redirect()->back()->withSuccess('Module Created Successfully!');
+        $this->service->store($request->validated());
+        return redirect()->back()->withSuccess('Bank Created Successfully!');
     }
 
     public function show(Bank $bank): View
