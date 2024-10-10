@@ -155,7 +155,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0);">
+                        <a class="nav-link" href="{{ route('country.index') }}">
                             <span class="nav-icon">
                                 <span class="nav-icon-bullet">
                                 </span>
