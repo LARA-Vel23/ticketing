@@ -8,7 +8,6 @@ use App\Http\Requests\StoreCurrencyRequest;
 use App\Http\Requests\UpdateCurrencyRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class CurrencyController extends Controller
 {
@@ -35,11 +34,6 @@ class CurrencyController extends Controller
         return redirect()->back()->withSuccess('Currency Created Successfully!');
     }
 
-    // public function show(Currency $currency): View
-    // {
-    //     return view('pages.module.show', compact('data'));
-    // }
-
     public function edit(Currency $currency): View
     {
         return view('pages.admin.currency.edit', compact('ip'));
@@ -50,9 +44,4 @@ class CurrencyController extends Controller
         $this->service->update($request->validated(), $currency);
         return redirect()->back()->withSuccess('Currency Updated Successfully!');
     }
-
-    // public function destroy(Currency $currency): RedirectResponse
-    // {
-    //     return redirect()->back()->withSuccess('Module Deleted Successfully!');
-    // }
 }

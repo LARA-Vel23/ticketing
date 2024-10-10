@@ -6,6 +6,7 @@ use App\Exports\CurrencyExport;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Currency;
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -46,6 +47,10 @@ class CurrencyTable extends DataTableComponent
             Column::make("Id", "id")
                 ->sortable(),
             Column::make("Name", "name")
+                ->sortable()
+                ->searchable(),
+            Column::make("Code", "code")
+                ->sortable()
                 ->searchable(),
             Column::make("Date Created", "created_at")
                 ->format(function($timestamp){
@@ -75,7 +80,7 @@ class CurrencyTable extends DataTableComponent
     public function export()
     {
         // Data Selected
-        $permissions = $this->getSelected();
+        $currencies = $this->getSelected();
 
         // Selected Column in table
         $columns = [];
@@ -143,8 +148,8 @@ class CurrencyTable extends DataTableComponent
 
         $this->clearSelected();
         return Excel::download(
-            new CurrencyExport($permissions, $finalSelectQuery, $finalHeaders),
-            now().'_permission.xlsx'
+            new CurrencyExport($currencies, $finalSelectQuery, $finalHeaders),
+            now().'_currency.xlsx'
         );
     }
 
@@ -152,7 +157,16 @@ class CurrencyTable extends DataTableComponent
     public function delete()
     {
         try{
-            Currency::whereIn('id', $this->getSelected())->delete();
+            $ids = Currency::whereIn('id', $this->getSelected())->pluck('country_id')->toArray();
+            $transactionCount = Transaction::whereIn('country_id', $ids)->count();
+            if($transactionCount < 1){
+                Currency::whereIn('id', $this->getSelected())->delete();
+            } else {
+                $this->alert('warning', 'Deletion of selected data prohibited to avoid future conflicts.', [
+                    'toast' => true,
+                ]);
+                return;
+            }
         }catch(\Exception $e){
             $this->alert('error', 'Something went wrong please try again later.', [
                 'toast' => true,

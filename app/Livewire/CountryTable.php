@@ -80,7 +80,7 @@ class CountryTable extends DataTableComponent
     public function export()
     {
         // Data Selected
-        $users = $this->getSelected();
+        $countries = $this->getSelected();
 
         // Selected Column in table
         $columns = [];
@@ -148,7 +148,7 @@ class CountryTable extends DataTableComponent
 
         $this->clearSelected();
         return Excel::download(
-            new CountryExport($users, $finalSelectQuery, $finalHeaders),
+            new CountryExport($countries, $finalSelectQuery, $finalHeaders),
             now().'_country.xlsx'
         );
     }

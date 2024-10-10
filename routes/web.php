@@ -35,16 +35,13 @@ Route::group(['middleware' => 'auth'], function(){
         Route::resource('/role', RoleController::class);
         Route::resource('/permission', PermissionController::class);
         Route::resource('/ip', IpController::class);
-<<<<<<< HEAD
         Route::resource('/currency', CurrencyController::class);
-=======
 
         Route::resource('/transaction', TransactionController::class);
 
         Route::resource('/bank', BankController::class);
         Route::resource('/country', CountryController::class);
 
->>>>>>> 803fe5c4972a3a27ce24c371e5b48bf32a289061
         Route::get('/profile', function() {
             return view("pages.admin.profile");
         })->name('admin.profile');

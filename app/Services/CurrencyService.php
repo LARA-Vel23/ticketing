@@ -8,17 +8,21 @@ class CurrencyService{
 
     public function store(array $data)
     {
-        $ip = new Currency;
-        $ip->name = $data['name'];
-        $ip->user_id = $data['user'];
-        $ip->save();
+        $currency = new Currency;
+        $currency->country_id = $data['country'];
+        $currency->sign = $data['sign'];
+        $currency->name = $data['name'];
+        $currency->code = $data['code'];
+        $currency->save();
     }
 
-    public function update(array $data, $ip)
+    public function update(array $data, $currency)
     {
-        $ip->name = $data['name'];
-        $ip->user_id = $data['user'];
-        $ip->save();
+        $currency->country_id = $data['country'];
+        $currency->sign = $data['sign'];
+        $currency->name = $data['name'];
+        $currency->code = $data['code'];
+        $currency->save();
     }
 
 }
