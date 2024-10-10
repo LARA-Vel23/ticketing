@@ -21,7 +21,7 @@
             </div>
             <div class="card-body">
                 <x-form-session />
-                <form action="{{ route('currency.update', $ip->id) }}" method="POST">
+                <form action="{{ route('currency.update', $currency->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group mb-3">
@@ -34,7 +34,7 @@
                             "
                             id="name"
                             name="name"
-                            name="{{ old('name', $ip->name) }}"
+                            name="{{ old('name', $currency->name) }}"
                             placeholder=""
                         />
                         @error('name')
@@ -55,7 +55,7 @@
                             @foreach (\App\Models\User::isMerchant()->get() as $user)
                                 <option
                                     value="{{ $user->id }}"
-                                    @selected($user->id == old('user', $ip->user_id))
+                                    @selected($user->id == old('user', $currency->user_id))
                                 >{{ $user->name }}
                                 </option>
                             @endforeach

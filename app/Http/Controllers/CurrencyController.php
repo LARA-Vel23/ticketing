@@ -36,7 +36,7 @@ class CurrencyController extends Controller
 
     public function edit(Currency $currency): View
     {
-        return view('pages.admin.currency.edit', compact('ip'));
+        return view('pages.admin.currency.edit', compact('currency'));
     }
 
     public function update(UpdateCurrencyRequest $request, Currency $currency): RedirectResponse

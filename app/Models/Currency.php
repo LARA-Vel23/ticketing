@@ -37,8 +37,4 @@ class Currency extends Model
     public function getReadableUpdatedDateAttribute(){
         return Carbon::parse($this->attributes['updated_at'])->diffForHumans();
     }
-    // public function country(): HasOne
-    // {
-    //     return $this->hasOne(Country::class, 'id');
-    // }
 }
