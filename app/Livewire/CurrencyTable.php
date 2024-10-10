@@ -52,6 +52,7 @@ class CurrencyTable extends DataTableComponent
             Column::make("Code", "code")
                 ->sortable()
                 ->searchable(),
+            Column::make("Sign", "sign"),
             Column::make("Date Created", "created_at")
                 ->format(function($timestamp){
                     $timestamp = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, 'UTC')
