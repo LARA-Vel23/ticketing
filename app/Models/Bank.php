@@ -27,6 +27,14 @@ class Bank extends Model
         'updated_at'
     ];
 
+    public function scopeSearch($query, $search)
+    {
+        return $query->when($search, function($query) use($search){
+            $query->where('name', 'LIKE', '%'.$search.'%')
+                ->orWhere('description', 'LIKE', '%'.$search.'%');
+        });
+    }
+
     public function getReadableCreatedDateAttribute(){
         return date('F j, Y', strtotime($this->attributes['created_at']));
     }

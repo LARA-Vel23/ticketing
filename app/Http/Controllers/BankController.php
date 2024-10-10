@@ -19,7 +19,7 @@ class BankController extends Controller
             // ->filterStatus(request()->get('status'))
             // ->latest()
             ->paginate(request()->get('limit') ? request()->get('limit') : $this->limit);
-        return view('pages.merchant.bank.index', compact('banks'));
+        return view('pages.admin.bank.index', compact('banks'));
     }
 
     public function create(): View
