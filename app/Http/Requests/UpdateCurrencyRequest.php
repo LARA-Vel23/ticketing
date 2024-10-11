@@ -22,8 +22,9 @@ class UpdateCurrencyRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'sign' => ['required', 'min:3', 'max:191'],
             'name' => ['required', 'min:3', 'max:191'],
-            'user' => ['required', 'numeric']
+            'code' => ['required', 'min:3', 'max:191']
         ];
     }
 }

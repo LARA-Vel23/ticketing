@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     @include('includes.resources')
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     @livewireStyles
 </head>
 <body>

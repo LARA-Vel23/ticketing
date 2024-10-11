@@ -36,12 +36,11 @@
                         <h1 class="fw-bold">{{ __('Login') }}</h1>
                     </div>
 
-                    <label for="email" class="pt-3">{{ __('Email') }}</label>
+                    <label for="email" class="pt-1">{{ __('Email') }}</label>
                     <input
                         id="email"
                         type="email"
                         placeholder="Email"
-                        type="email"
                         class="form-control @error('email') is-invalid @enderror"
                         name="email"
                         value="{{ old('email') }}"
@@ -50,7 +49,7 @@
                         required
                     >
 
-                    <label for="email" class="pt-2">{{ __('Password') }}</label>
+                    <label for="email" class="pt-1">{{ __('Password') }}</label>
                     <input
                         id="password"
                         type="password"
@@ -61,7 +60,8 @@
                         autocomplete="current-password"
                     >
 
-                    {{-- <a href="#">Forget Your Password?</a> --}}
+                    <div class="g-recaptcha py-3" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+
                     @if (Route::has('password.request'))
                         <a href="{{ route('password.request') }}">
                             {{ __('Forgot Your Password?') }}

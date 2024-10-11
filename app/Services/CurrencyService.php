@@ -9,7 +9,6 @@ class CurrencyService{
     public function store(array $data)
     {
         $currency = new Currency;
-        $currency->country_id = $data['country'];
         $currency->sign = $data['sign'];
         $currency->name = $data['name'];
         $currency->code = $data['code'];
@@ -18,7 +17,6 @@ class CurrencyService{
 
     public function update(array $data, $currency)
     {
-        $currency->country_id = $data['country'];
         $currency->sign = $data['sign'];
         $currency->name = $data['name'];
         $currency->code = $data['code'];

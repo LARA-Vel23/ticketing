@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Exports\BankExport;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Bank;
@@ -32,7 +33,7 @@ class BankTable extends DataTableComponent
             ])
             ->setConfigurableAreas([
                 'toolbar-right-start' => [
-                    'pages.admin.admin.add',
+                    'pages.admin.bank.add',
                 ],
             ])
         ;
@@ -94,9 +95,7 @@ class BankTable extends DataTableComponent
     public function builder(): Builder
     {
         return Bank::query()
-            ->isAdmin()
             ->search(request()->get('search'))
-            ->filterStatus(request()->get('status'))
             ->latest();
     }
 
@@ -171,8 +170,8 @@ class BankTable extends DataTableComponent
 
         $this->clearSelected();
         return Excel::download(
-            new AdminExport($users, $finalSelectQuery, $finalHeaders),
-            now().'_admin.xlsx'
+            new BankExport($users, $finalSelectQuery, $finalHeaders),
+            now().'_bank.xlsx'
         );
     }
 

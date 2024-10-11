@@ -34,7 +34,7 @@
                             "
                             id="name"
                             name="name"
-                            name="{{ old('name', $currency->name) }}"
+                            value="{{ old('name', $currency->name) }}"
                             placeholder=""
                         />
                         @error('name')
@@ -42,25 +42,36 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="user">{{ __('Merchant') }}</label>
-                        <select
+                        <label for="code">{{ __('Code') }}</label>
+                        <input
+                            type="text"
                             class="form-control
-                                @error('user') is-invalid @enderror
-                                {{ !$errors->has('user') && old('user', $currency->user_id) ? 'is-valid' : '' }}
+                                @error('code') is-invalid @enderror
+                                {{ !$errors->has('code') && old('code', $currency->code) ? 'is-valid' : '' }}
                             "
-                            id="user"
-                            name="user"
-                        >
-                            <option value="">{{ __('Select') }}</option>
-                            @foreach (\App\Models\User::isMerchant()->get() as $user)
-                                <option
-                                    value="{{ $user->id }}"
-                                    @selected($user->id == old('user', $currency->user_id))
-                                >{{ $user->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('user')
+                            id="code"
+                            name="code"
+                            value="{{ old('code', $currency->code) }}"
+                            placeholder=""
+                        />
+                        @error('code')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="sign">{{ __('Sign') }}</label>
+                        <input
+                            type="text"
+                            class="form-control
+                                @error('sign') is-invalid @enderror
+                                {{ !$errors->has('sign') && old('sign', $currency->sign) ? 'is-valid' : '' }}
+                            "
+                            id="sign"
+                            name="sign"
+                            value="{{ old('sign', $currency->sign) }}"
+                            placeholder=""
+                        />
+                        @error('sign')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>

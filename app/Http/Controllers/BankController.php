@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
-use App\Http\Requests\StoreIpRequest;
-use App\Http\Requests\UpdateIpRequest;
+use App\Http\Requests\StoreBankRequest;
+use App\Http\Requests\UpdateBankRequest;
 use App\Services\BankService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -34,24 +34,14 @@ class BankController extends Controller
         return redirect()->back()->withSuccess('Bank Created Successfully!');
     }
 
-    public function show(Bank $bank): View
-    {
-        return view('pages.admin.admin.show', compact('data'));
-    }
-
     public function edit(Bank $bank): View
     {
-        return view('pages.admin.admin.edit', compact('data'));
+        return view('pages.admin.bank.edit', compact('bank'));
     }
 
-    public function update(UpdateUserRequest $request, Bank $bank): RedirectResponse
+    public function update(UpdateBankRequest $request, Bank $bank): RedirectResponse
     {
-        return redirect()->back()->withSuccess('Module Updated Successfully!');
-    }
-
-    public function destroy(Bank $bank): RedirectResponse
-    {
-        $bank->delete();
-        return redirect()->back()->withSuccess('Module Deleted Successfully!');
+        $this->service->update($request->validated(), $bank);
+        return redirect()->back()->withSuccess('Bank Updated Successfully!');
     }
 }
