@@ -35,38 +35,54 @@
                     <div class="d-flex align-items-center justify-content-center">
                         <h1 class="fw-bold">{{ __('Login') }}</h1>
                     </div>
-
-                    <label for="email" class="pt-1">{{ __('Email') }}</label>
-                    <input
-                        id="email"
-                        type="email"
-                        placeholder="Email"
-                        class="form-control @error('email') is-invalid @enderror"
-                        name="email"
-                        value="{{ old('email') }}"
-                        autocomplete="email"
-                        autofocus
-                        required
-                    >
-
-                    <label for="email" class="pt-1">{{ __('Password') }}</label>
-                    <input
-                        id="password"
-                        type="password"
-                        class="form-control @error('password') is-invalid @enderror"
-                        name="password"
-                        required
-                        placeholder="Password"
-                        autocomplete="current-password"
-                    >
-
+                    <div class="form-group">
+                        <label for="email" class="pt-1">{{ __('Email') }}</label>
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="Email"
+                            class="form-control @error('email') is-invalid @enderror"
+                            name="email"
+                            value="{{ old('email') }}"
+                            autocomplete="email"
+                            autofocus
+                            required
+                        >
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="pt-1">{{ __('Password') }}</label>
+                        <input
+                            id="password"
+                            type="password"
+                            class="form-control @error('password') is-invalid @enderror"
+                            name="password"
+                            required
+                            placeholder="Password"
+                            autocomplete="current-password"
+                        >
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                     <div class="g-recaptcha py-3" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
 
-                    @if (Route::has('password.request'))
+                    @error('g-recaptcha-response')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                    {{-- @if (Route::has('password.request'))
                         <a href="{{ route('password.request') }}">
                             {{ __('Forgot Your Password?') }}
                         </a>
-                    @endif
+                    @endif --}}
                     <button type="submit" class="btn btn-primary">{{ __('Log in') }}</button>
                 </form>
             </div>
@@ -86,7 +102,7 @@
                         </div>
                         {{-- <h1>Hello, Friend!</h1> --}}
                         <p>{{ __('Enter your personal details to use all of site features') }}</p>
-                        <button class="hidden" id="register">{{ __('Forgot Password') }}</button>
+                        <a class="btn btn-outline-light text-uppercase text-light fw-semibold p-2 px-4" href="{{ route('password.request') }}">{{ __('Forgot Password') }}</a>
                     </div>
                 </div>
             </div>

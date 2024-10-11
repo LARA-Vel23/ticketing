@@ -3,18 +3,19 @@
     <div id="authentication">
         <div class="container" id="container">
             <div class="form-container sign-up">
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
-                <form method="POST" action="{{ route('password.email') }}">
+
+                <form method="POST" action="{{ route('auth.showresetpassword') }}">
                     @csrf
                     <div><h1 class="fw-bold">{{ __('Forgot Password?') }}</h1></div>
 
                     <div class="d-flex justify-content-center align-items-center mb-2">
                         <img src="{{url('/images/forgotpassword.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
                     </div>
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                     @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -103,6 +104,10 @@
     loginBtn.addEventListener('click', () => {
         container.classList.remove("active");
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+            container.classList.add("active");
+        });
 </script>
 
 @endpush

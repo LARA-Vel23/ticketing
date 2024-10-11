@@ -9,12 +9,13 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\IpController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
-|--------------------------------------------------------------------------
+|---------------------------------------------------------------------------
 | Web Routes
-|--------------------------------------------------------------------------
+|---------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
@@ -26,19 +27,20 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('auth.passwords');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('auth.submitForgetPassword');
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('auth.showResetPassword');
+Route::post('/reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('auth.submitResetPassword');
 
-Route::group(['middleware' => 'auth'], function(){
-    Route::group(['middleware' => 'Admin', 'prefix' => 'admin'], function(){
+Route::group(['middleware' => 'auth'], function() {
+    Route::group(['middleware' => 'Admin', 'prefix' => 'admin'], function() {
         Route::resource('/admin', UserController::class);
         Route::resource('/merchant', MerchantController::class);
-
         Route::resource('/role', RoleController::class);
         Route::resource('/permission', PermissionController::class);
         Route::resource('/ip', IpController::class);
         Route::resource('/currency', CurrencyController::class);
-
         Route::resource('/transaction', TransactionController::class);
-
         Route::resource('/bank', BankController::class);
         Route::resource('/country', CountryController::class);
 
@@ -50,7 +52,7 @@ Route::group(['middleware' => 'auth'], function(){
         })->name('admin.profile.change_password');
     });
 
-    Route::group(['middleware' => 'Merchant'], function(){
+    Route::group(['middleware' => 'Merchant'], function() {
         Route::get('/dashboard', 'App\Http\Controllers\Merchant\DashboardController@index')->name('dashboard');
         Route::get('/profile', function() {
             return view("pages.admin.profile");
