@@ -10,7 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 
-class TransactionController extends Controller
+class MerchantTransactionController extends Controller
 {
     public $service;
 
@@ -21,12 +21,12 @@ class TransactionController extends Controller
 
     public function index(): View
     {
-        return view('pages.admin.transaction.index');
+        return view('pages.merchant.transaction.index');
     }
 
     public function create(): View
     {
-        return view('pages.admin.transaction.create');
+        return view('pages.merchant.transaction.create');
     }
 
     public function store(StoreTransactionRequest $request): RedirectResponse
@@ -37,7 +37,7 @@ class TransactionController extends Controller
 
     public function edit(Transaction $transaction): View
     {
-        return view('pages.admin.transaction.edit', compact('transaction'));
+        return view('pages.merchant.transaction.edit', compact('transaction'));
     }
 
     public function update(UpdateTransactionRequest $request, Transaction $transaction): RedirectResponse

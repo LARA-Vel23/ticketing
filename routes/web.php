@@ -3,13 +3,15 @@
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\MerchantBankController;
+use App\Http\Controllers\MerchantTransactionController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\IpController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,14 +25,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/forgotpassword', [ForgotPasswordController::class, 'forgot']);
+Route::post('/reset-password', [ForgotPasswordController::class, 'forgot_password']);
+Route::post('/reset/{token}', [ForgotPasswordController::class, 'reset']);
+
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('auth.passwords');
-Route::post('/forgot-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('auth.submitForgetPassword');
-Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('auth.showResetPassword');
-Route::post('/reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('auth.submitResetPassword');
+// Route::get('/forgotpassword', [ForgotPasswordController::class, 'forgot']);
+// Route::post('/forgotpassword', [ForgotPasswordController::class, 'forgot_password']);
+// Route::post('/forgot-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('auth.submitForgetPassword');
+// Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('auth.showResetPassword');
+// Route::post('/reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('auth.submitResetPassword');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'Admin', 'prefix' => 'admin'], function() {
@@ -52,13 +59,19 @@ Route::group(['middleware' => 'auth'], function() {
         })->name('admin.profile.change_password');
     });
 
-    Route::group(['middleware' => 'Merchant'], function() {
+    Route::group(['middleware' => 'Merchant', 'prefix' => 'merchant'], function() {
         Route::get('/dashboard', 'App\Http\Controllers\Merchant\DashboardController@index')->name('dashboard');
         Route::get('/profile', function() {
             return view("pages.admin.profile");
         })->name('profile');
+        Route::get('/change_password', function() {
+            return view("pages.merchant.change_password");
+        });
         Route::get('/profile_change_password', function() {
             return view("pages.admin.change_password");
         })->name('profile.change_password');
+        Route::resource('/bank', MerchantBankController::class);
+        Route::resource('/transaction', MerchantTransactionController::class);
+
     });
 });

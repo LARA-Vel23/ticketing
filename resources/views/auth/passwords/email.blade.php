@@ -4,18 +4,19 @@
         <div class="container" id="container">
             <div class="form-container sign-up">
 
-                <form method="POST" action="{{ route('auth.showresetpassword') }}">
+                {{-- <form method="POST" action="{{ route('auth.showresetpassword') }}"> --}}
+                <form method="POST" action="{{ route('register') }}">
                     @csrf
                     <div><h1 class="fw-bold">{{ __('Forgot Password?') }}</h1></div>
 
                     <div class="d-flex justify-content-center align-items-center mb-2">
                         <img src="{{url('/images/forgotpassword.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
                     </div>
-                    @if (session('status'))
+                    {{-- @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
-                    @endif
+                    @endif --}}
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                     @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -32,39 +33,55 @@
                     <div class="d-flex align-items-center justify-content-center">
                         <h1 class="fw-bold">{{ __('Login') }}</h1>
                     </div>
-
-                    <label for="email" class="pt-1">{{ __('Email') }}</label>
-                    <input
-                        id="email"
-                        type="email"
-                        placeholder="Email"
-                        type="email"
-                        class="form-control @error('email') is-invalid @enderror"
-                        name="email"
-                        value="{{ old('email') }}"
-                        autocomplete="email"
-                        autofocus
-                        required
-                    >
-
-                    <label for="email" class="pt-1">{{ __('Password') }}</label>
-                    <input
-                        id="password"
-                        type="password"
-                        class="form-control @error('password') is-invalid @enderror"
-                        name="password"
-                        required
-                        placeholder="Password"
-                        autocomplete="current-password"
-                    >
+                    <div class="form-group">
+                        <label for="email" class="pt-1">{{ __('Email') }}</label>
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="Email"
+                            class="form-control @error('email') is-invalid @enderror"
+                            name="email"
+                            value="{{ old('email') }}"
+                            autocomplete="email"
+                            autofocus
+                            required
+                        >
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="pt-1">{{ __('Password') }}</label>
+                        <input
+                            id="password"
+                            type="password"
+                            class="form-control @error('password') is-invalid @enderror"
+                            name="password"
+                            required
+                            placeholder="Password"
+                            autocomplete="current-password"
+                        >
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                     <div class="g-recaptcha py-3" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
 
-                    @if (Route::has('password.request'))
+                    @error('g-recaptcha-response')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                    {{-- @if (Route::has('password.request'))
                         <a href="{{ route('password.request') }}">
                             {{ __('Forgot Your Password?') }}
                         </a>
-                    @endif
-                    <button type="submit" class="btn btn-primary">{{ __('Log In') }}</button>
+                    @endif --}}
+                    <button type="submit" class="btn btn-primary">{{ __('Log in') }}</button>
                 </form>
             </div>
             <div class="toggle-container">

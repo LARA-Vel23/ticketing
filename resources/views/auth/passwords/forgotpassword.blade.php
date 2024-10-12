@@ -3,6 +3,7 @@
     <div id="authentication">
         <div class="container" id="container">
             <div class="form-container sign-up">
+
                 <form method="POST" action="{{ url('/reset-password') }}">
                     @csrf
                     <div><h1 class="fw-bold">{{ __('Forgot Password?') }}</h1></div>
@@ -10,21 +11,18 @@
                     <div class="d-flex justify-content-center align-items-center mb-2">
                         <img src="{{url('/images/forgotpassword.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
                     </div>
+                    @if(session('success'))
+                        <div class="alert alert-success" style="font-size:0.6em;">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
-                    <input
-                        id="email"
-                        type="email"
-                        class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
-                        required
-                        autocomplete="email"
-                        autofocus
-                        placeholder="Email Address"
-                    >
                     @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                        <div class="alert alert-danger" style="font-size:0.6em;">
+                            {{ $message }}
+                        </div>
                     @enderror
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                     <button type="submit" class="btn btn-primary">{{ __('Send Password Reset Link') }}</button>
                 </form>
@@ -78,11 +76,7 @@
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
-                    {{-- @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}">
-                            {{ __('Forgot Your Password?') }}
-                        </a>
-                    @endif --}}
+
                     <button type="submit" class="btn btn-primary">{{ __('Log in') }}</button>
                 </form>
             </div>
@@ -90,19 +84,20 @@
                 <div class="toggle">
                     <div class="toggle-panel toggle-left">
                         <div class="d-flex justify-content-center align-items-center mb-2">
-                            <img src="{{url('/images/login_card.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
+                            <img src="/images/login_card.png" alt="logo" class="responsive-logo" style="width: 200px; ">
                         </div>
-                        {{-- <h1>Welcome Back!</h1> --}}
+
                         <p>{{ __('Use your registered email to reset password') }}</p>
                         <button class="hidden" id="login">{{ __('Log In') }}</button>
                     </div>
-                    <div class="toggle-panel toggle-right">
+                    <div class="toggle-panel toggle-right active">
+
                         <div class="d-flex justify-content-center align-items-center mb-2">
-                            <img src="{{url('/images/login_card.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
+                            <img src="/images/login_card.png" alt="logo" class="responsive-logo" style="width: 200px; ">
                         </div>
-                        {{-- <h1>Hello, Friend!</h1> --}}
+
                         <p>{{ __('Enter your personal details to use all of site features') }}</p>
-                        <a class="btn btn-outline-light text-uppercase text-light fw-semibold p-2 px-4" href="{{ url('/forgotpassword') }}">{{ __('Forgot Password') }}</a>
+                        <button class="hidden" id="register">{{ __('Forgot Password') }}</button>
                     </div>
                 </div>
             </div>
@@ -110,17 +105,23 @@
     </div>
 @endsection
 @push('scripts')
-    <script>
-        const container = document.getElementById('container');
-        const registerBtn = document.getElementById('register');
-        const loginBtn = document.getElementById('login');
+<script>
+    const container = document.getElementById('container');
+    const registerBtn = document.getElementById('register');
+    const loginBtn = document.getElementById('login');
 
-        registerBtn.addEventListener('click', () => {
+    registerBtn.addEventListener('click', () => {
+        container.classList.add("active");
+    });
+
+    loginBtn.addEventListener('click', () => {
+        container.classList.remove("active");
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
             container.classList.add("active");
         });
+</script>
 
-        loginBtn.addEventListener('click', () => {
-            container.classList.remove("active");
-        });
-    </script>
 @endpush
+
