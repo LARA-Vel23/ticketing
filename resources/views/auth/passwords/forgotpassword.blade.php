@@ -18,11 +18,19 @@
                     @endif
 
                     @error('email')
-                        <div class="alert alert-danger" style="font-size:0.6em;">
-                            {{ $message }}
-                        </div>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
                     @enderror
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                    <input
+                        id="email"
+                        type="email"
+                        class="form-control @error('email') is-invalid @enderror"
+                        name="email" value="{{ old('email') }}"
+                        required
+                        autocomplete="email"
+                    >
 
                     <button type="submit" class="btn btn-primary">{{ __('Send Password Reset Link') }}</button>
                 </form>

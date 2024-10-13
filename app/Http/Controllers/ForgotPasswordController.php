@@ -8,9 +8,10 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\ForgotPasswordMail;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 // use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
@@ -28,7 +29,7 @@ class ForgotPasswordController extends Controller
             'email' => 'required|email',
         ]);
 
-        // Find the user by email
+
         $user = User::where('email', $request->email)->first();
 
         if ($user) {
@@ -41,4 +42,40 @@ class ForgotPasswordController extends Controller
         }
     }
 
+    public function reset($token)
+    {
+        $user = User::where('remember_token', '=', $token)->first();
+
+        if (!empty($user)) {
+
+            return view('auth.passwords.reset', [
+                'user' => $user,
+                'token' => $token,
+            ]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function post_reset($token, Request $request)
+    {
+        $user = User::where('remember_token', '=', $token)->first();
+        if(!empty($user)){
+            if($request->password == $request->cpassword)
+            {
+                $user->password = Hash::make($request->password);
+                $user->remember_token = Str::random(40);
+                $user->save();
+
+
+                return redirect()->route('login')->with('success', 'Password successfully reset');
+            }
+            else{
+                return redirect()->back()->with('error', 'Password and Confirm Password does not match');
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
 }

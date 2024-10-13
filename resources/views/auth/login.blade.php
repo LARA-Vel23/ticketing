@@ -78,11 +78,7 @@
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
-                    {{-- @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}">
-                            {{ __('Forgot Your Password?') }}
-                        </a>
-                    @endif --}}
+
                     <button type="submit" class="btn btn-primary">{{ __('Log in') }}</button>
                 </form>
             </div>
@@ -92,7 +88,7 @@
                         <div class="d-flex justify-content-center align-items-center mb-2">
                             <img src="{{url('/images/login_card.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
                         </div>
-                        {{-- <h1>Welcome Back!</h1> --}}
+
                         <p>{{ __('Use your registered email to reset password') }}</p>
                         <button class="hidden" id="login">{{ __('Log In') }}</button>
                     </div>
@@ -100,7 +96,7 @@
                         <div class="d-flex justify-content-center align-items-center mb-2">
                             <img src="{{url('/images/login_card.png')}}" alt="logo" class="responsive-logo" style="width: 200px; ">
                         </div>
-                        {{-- <h1>Hello, Friend!</h1> --}}
+
                         <p>{{ __('Enter your personal details to use all of site features') }}</p>
                         <a class="btn btn-outline-light text-uppercase text-light fw-semibold p-2 px-4" href="{{ url('/forgotpassword') }}">{{ __('Forgot Password') }}</a>
                     </div>

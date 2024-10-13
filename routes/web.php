@@ -25,19 +25,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/forgotpassword', [ForgotPasswordController::class, 'forgot']);
-Route::post('/reset-password', [ForgotPasswordController::class, 'forgot_password']);
-Route::post('/reset/{token}', [ForgotPasswordController::class, 'reset']);
+Route::get('/login', function() {
+    return view("auth.login");
+})->name('auth.login');
 
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::get('/forgotpassword', [ForgotPasswordController::class, 'forgot']);
-// Route::post('/forgotpassword', [ForgotPasswordController::class, 'forgot_password']);
-// Route::post('/forgot-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('auth.submitForgetPassword');
-// Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('auth.showResetPassword');
-// Route::post('/reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('auth.submitResetPassword');
+ //Reset password
+Route::get('/forgotpassword', [ForgotPasswordController::class, 'forgot']);
+Route::post('/reset-password', [ForgotPasswordController::class, 'forgot_password']);
+Route::get('reset/{token}', [ForgotPasswordController::class, 'reset']);
+Route::post('reset/{token}', [ForgotPasswordController::class, 'post_reset'])->name('submitResetPassword');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'Admin', 'prefix' => 'admin'], function() {
