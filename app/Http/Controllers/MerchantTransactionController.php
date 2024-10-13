@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
-use App\Http\Requests\StoreTransactionRequest;
-use App\Http\Requests\UpdateTransactionRequest;
-use App\Services\TransactionService;
+use App\Http\Requests\StoreMerchantTransactionRequest;
+use App\Http\Requests\UpdateMerchantTransactionRequest;
+use App\Services\MerchantTransactionService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -16,7 +16,7 @@ class MerchantTransactionController extends Controller
 
     public function __construct()
     {
-        $this->service = (new TransactionService);
+        $this->service = (new MerchantTransactionService);
     }
 
     public function index(): View
@@ -29,7 +29,7 @@ class MerchantTransactionController extends Controller
         return view('pages.merchant.transaction.create');
     }
 
-    public function store(StoreTransactionRequest $request): RedirectResponse
+    public function store(StoreMerchantTransactionRequest $request): RedirectResponse
     {
         $this->service->store($request->validated());
         return redirect()->back()->withSuccess('Transaction Created Successfully!');
@@ -40,7 +40,7 @@ class MerchantTransactionController extends Controller
         return view('pages.merchant.transaction.edit', compact('transaction'));
     }
 
-    public function update(UpdateTransactionRequest $request, Transaction $transaction): RedirectResponse
+    public function update(UpdateMerchantTransactionRequest $request, Transaction $transaction): RedirectResponse
     {
         $this->service->update($request->validated(), $transaction);
         return redirect()->back()->withSuccess('Transaction Updated Successfully!');
