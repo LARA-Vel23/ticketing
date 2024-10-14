@@ -183,13 +183,13 @@
             </li>
             <li class="nav-title">{{ __('Finance Management') }}</li>
             <li class="nav-item">
-                <a class="nav-link {{ false ?? 'active' }}" href="javascript:void(0);">
+                <a class="nav-link {{ false ?? 'active' }}" href="{{ route('transaction') }}">
                     <i class="nav-icon cil-money"></i>
                     {{ __('Transaction') }}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ false ?? 'active' }}" href="javascript:void(0);">
+                <a class="nav-link {{ false ?? 'active' }}" href="{{ route('balance') }}">
                     <i class="nav-icon cil-wallet"></i>
                     {{ __('Balance') }}
                 </a>
