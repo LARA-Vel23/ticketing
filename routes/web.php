@@ -12,7 +12,9 @@ use App\Http\Controllers\IpController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |---------------------------------------------------------------------------
@@ -31,8 +33,8 @@ Route::get('/login', function() {
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [DashboardController::class, 'index'])->name('home');
  //Reset password
 Route::get('/forgotpassword', [ForgotPasswordController::class, 'forgot']);
 Route::post('/reset-password', [ForgotPasswordController::class, 'forgot_password']);
@@ -41,6 +43,7 @@ Route::post('reset/{token}', [ForgotPasswordController::class, 'post_reset'])->n
 
 Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'Admin', 'prefix' => 'admin'], function() {
+        Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
         Route::resource('/admin', UserController::class);
         Route::resource('/merchant', MerchantController::class);
         Route::resource('/role', RoleController::class);
