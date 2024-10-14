@@ -52,6 +52,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::group(['middleware' => 'Merchant'], function(){
         Route::get('/dashboard', 'App\Http\Controllers\Merchant\DashboardController@index')->name('dashboard');
+        Route::get('/transaction', 'App\Http\Controllers\Merchant\TransactionController@index')->name('transaction');
         Route::get('/balance', 'App\Http\Controllers\Merchant\BalanceController@index')->name('balance');
         Route::get('/profile', function() {
             return view("pages.admin.profile");
