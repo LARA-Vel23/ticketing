@@ -43,4 +43,14 @@ class Transaction extends Model
     public function getReadableUpdatedDateAttribute(){
         return Carbon::parse($this->attributes['updated_at'])->diffForHumans();
     }
+
+    public function scopeMerchant($query, $id)
+    {
+        return $query->where('merchant_id', $id);
+    }
+
+    public function scopeProcessed($query)
+    {
+        return $query->whereIn('status', [2, 3]);
+    }
 }
