@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Merchant;
 
 use App\Models\Bank;
 
-class MerchantBankService{
+class BankService{
 
     public function store(array $data)
     {
@@ -17,6 +17,7 @@ class MerchantBankService{
         $bank->bank_branch = $data['bank_branch'];
         $bank->bank_branch_code = $data['bank_branch_code'];
         $bank->status = 0;
+        $bank->is_system_generated = 0;
         $bank->save();
     }
 
@@ -29,7 +30,8 @@ class MerchantBankService{
         $bank->bank_swift = $data['bank_swift'];
         $bank->bank_branch = $data['bank_branch'];
         $bank->bank_branch_code = $data['bank_branch_code'];
-        $bank->status = $data['status'];
+        $bank->status = 0;
+        $bank->is_system_generated = 0;
         $bank->save();
     }
 

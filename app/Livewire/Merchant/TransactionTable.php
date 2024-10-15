@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Merchant;
 
-use App\Exports\BankExport;
+use App\Exports\TransactionExport;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\Bank;
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
 use Maatwebsite\Excel\Facades\Excel;
 
-class MerchantBankTable extends DataTableComponent
+class TransactionTable extends DataTableComponent
 {
-    protected $model = Bank::class;
+    protected $model = Transaction::class;
 
     use LivewireAlert;
 
@@ -33,7 +33,7 @@ class MerchantBankTable extends DataTableComponent
             ])
             ->setConfigurableAreas([
                 'toolbar-right-start' => [
-                    'pages.merchant.bank.add',
+                    'pages.merchant.transaction.add',
                 ],
             ])
         ;
@@ -44,34 +44,62 @@ class MerchantBankTable extends DataTableComponent
         return [
             Column::make("Id", "id")
                 ->sortable(),
-            Column::make("User id", "user_id")
+            Column::make("Merchant ID", "merchant_id")
                 ->sortable()
                 ->searchable(),
-            Column::make("Name", "name")
+            Column::make("Country ID", "country_id")
                 ->sortable()
                 ->searchable(),
-            Column::make("Account name", "account_name")
+            Column::make("Bank ID", "bank_id")
                 ->sortable()
                 ->searchable(),
-            Column::make("Account number", "account_number")
+            Column::make("Admin ID", "admin_id")
                 ->sortable()
                 ->searchable(),
-            Column::make("Bank ifsc", "bank_ifsc")
+            Column::make("Bank", "bank")
                 ->sortable()
                 ->searchable(),
-            Column::make("Bank swift", "bank_swift")
+            Column::make("Account Name", "account_name")
                 ->sortable()
                 ->searchable(),
-            Column::make("Bank branch", "bank_branch")
+            Column::make("Account Number", "account_number")
                 ->sortable()
                 ->searchable(),
-            Column::make("Bank branch code", "bank_branch_code")
+            Column::make("Bank IFSC", "bank_ifsc")
+                ->sortable()
+                ->searchable(),
+            Column::make("Bank Swift", "bank_swift")
+                ->sortable()
+                ->searchable(),
+            Column::make("Bank Branch", "bank_branch")
+                ->sortable()
+                ->searchable(),
+            Column::make("Bank Branch Code", "bank_branch_code")
+                ->sortable()
+                ->searchable(),
+            Column::make("Bank Reference", "bank_reference")
+                ->sortable()
+                ->searchable(),
+            Column::make("Reference", "reference")
+                ->sortable()
+                ->searchable(),
+            Column::make("Type", "type")
                 ->sortable()
                 ->searchable(),
             Column::make('Status', 'status')
                 ->format(function($status){
                     return $status == 1 ? 'Active' : 'Deactivated';
                 }),
+            Column::make("Amount", "amount")
+                ->sortable()
+                ->searchable(),
+            Column::make("Remarks", "remarks")
+                ->sortable()
+                ->searchable(),
+            Column::make("Notify", "notify")
+                ->sortable()
+                ->searchable(),
+
             Column::make("Date Created", "created_at")
             ->format(function($timestamp){
                 $timestamp = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, 'UTC')
@@ -86,7 +114,7 @@ class MerchantBankTable extends DataTableComponent
             ->sortable(),
             Column::make('Actions', 'id')
                 ->format(function($value, $column, $row) {
-                    return view('pages.merchant.bank.action', compact('value', 'column', 'row'));
+                    return view('pages.merchant.transaction.action', compact('value', 'column', 'row'));
                 })
                 ->excludeFromColumnSelect(),
         ];
@@ -94,8 +122,8 @@ class MerchantBankTable extends DataTableComponent
 
     public function builder(): Builder
     {
-        return Bank::query()
-            ->search(request()->get('search'))
+        return Transaction::query()
+            // ->search(request()->get('search'))
             ->latest();
     }
 
@@ -170,7 +198,7 @@ class MerchantBankTable extends DataTableComponent
 
         $this->clearSelected();
         return Excel::download(
-            new BankExport($users, $finalSelectQuery, $finalHeaders),
+            new TransactionExport($users, $finalSelectQuery, $finalHeaders),
             now().'_bank.xlsx'
         );
     }
@@ -179,7 +207,7 @@ class MerchantBankTable extends DataTableComponent
     public function delete()
     {
         try{
-            Bank::whereIn('id', $this->getSelected())->delete();
+            Transaction::whereIn('id', $this->getSelected())->delete();
         }catch(\Exception $e){
             $this->alert('error', 'Something went wrong please try again later.', [
                 'toast' => true,

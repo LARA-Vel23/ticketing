@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Merchant;
 
 use App\Models\Transaction;
 
-class MerchantTransactionService{
+class TransactionService{
 
     public function store(array $data)
     {

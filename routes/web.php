@@ -3,9 +3,9 @@
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\MerchantController;
-use App\Http\Controllers\MerchantBankController;
 use App\Http\Controllers\MerchantTransactionController;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\MBankController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\IpController;
@@ -40,7 +40,6 @@ Route::get('/forgotpassword', [ForgotPasswordController::class, 'forgot']);
 Route::post('/reset-password', [ForgotPasswordController::class, 'forgot_password']);
 Route::get('reset/{token}', [ForgotPasswordController::class, 'reset']);
 Route::post('reset/{token}', [ForgotPasswordController::class, 'post_reset'])->name('submitResetPassword');
-
 Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'Admin', 'prefix' => 'admin'], function() {
         Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
@@ -62,21 +61,21 @@ Route::group(['middleware' => 'auth'], function() {
         })->name('admin.profile.change_password');
     });
 
-    Route::group(['middleware' => 'Merchant', 'prefix' => 'merchant'], function() {
+    Route::group(['middleware' => 'Merchant'], function(){
         Route::get('/dashboard', 'App\Http\Controllers\Merchant\DashboardController@index')->name('dashboard');
         Route::get('/transaction', 'App\Http\Controllers\Merchant\TransactionController@index')->name('transaction');
         Route::get('/balance', 'App\Http\Controllers\Merchant\BalanceController@index')->name('balance');
+        Route::resource('/bank', MBankController::class);
+        Route::post('bank/{id}', 'MbankController@update')->name('bank.update');
         Route::get('/profile', function() {
             return view("pages.admin.profile");
         })->name('profile');
-        Route::get('/change_password', function() {
-            return view("pages.merchant.change_password");
-        });
         Route::get('/profile_change_password', function() {
             return view("pages.admin.change_password");
         })->name('profile.change_password');
-        Route::resource('/bank', MerchantBankController::class);
-        Route::resource('/transaction', MerchantTransactionController::class);
 
+        Route::get('/service', function() {
+            return view("pages.merchant.service");
+        })->name('service');
     });
 });

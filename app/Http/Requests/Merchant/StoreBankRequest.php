@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Merchant;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateMerchantBankRequest extends FormRequest
+class StoreBankRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,8 +28,7 @@ class UpdateMerchantBankRequest extends FormRequest
             'bank_ifsc' => ['nullable', 'min:3', 'max:191'],
             'bank_swift' => ['nullable', 'min:3', 'max:191'],
             'bank_branch' => ['nullable', 'min:3', 'max:191'],
-            'bank_branch_code' => ['nullable', 'min:3', 'max:191'],
-            'status' => ['nullable', 'in:1,2']
+            'bank_branch_code' => ['nullable', 'min:3', 'max:191']
         ];
     }
 }

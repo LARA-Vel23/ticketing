@@ -25,6 +25,23 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group mb-3">
+                        <label for="user_id">{{ __('User ID') }}</label>
+                        <input
+                            type="text"
+                            class="form-control
+                                @error('user_id') is-invalid @enderror
+                                {{ !$errors->has('user_id') && old('user_id', $bank->user_id) ? 'is-valid' : '' }}
+                            "
+                            id="user_id"
+                            name="user_id"
+                            value="{{ old('user_id', $bank->user_id) }}"
+                            placeholder=""
+                        />
+                        @error('user_id')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-3">
                         <label for="name">{{ __('Name') }}</label>
                         <input
                             type="text"
@@ -160,25 +177,6 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="status">{{ __('Status') }}</label>
-                        <select
-                            class="form-control
-                                @error('status') is-invalid @enderror
-                                {{ !$errors->has('status') && old('status') ? 'is-valid' : '' }}
-                            "
-                            id="status"
-                            name="status"
-                        >
-                            <option value="">{{ __('Select') }}</option>
-                            <option value="1" @selected($bank->status == 1)>{{ __('Active') }}</option>
-                            <option value="2" @selected($bank->status == 0)>{{ __('Deactivated') }}</option>
-                        </select>
-                        @error('status')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
                     <br>
                     <div class="d-flex gap-2 align-items-center">
                         <a

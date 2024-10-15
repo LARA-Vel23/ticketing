@@ -41,10 +41,9 @@ class LoginController extends Controller
             'g-recaptcha-response' => 'required',
         ]);
 
-        return [
-            'email' => $request->{$this->username()},
-            'password' => $request->password,
-        ];
+        {
+            return ['email' => $request->{$this->username()}, 'password' => $request->password, 'status' => 1, 'deleted_at' => null];
+        }
 
         $response = $request->input('g-recaptcha-response');
         $secret = config('services.recaptcha.secret_key');

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Merchant;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMerchantTransactionRequest extends FormRequest
+class UpdateTransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,6 +36,7 @@ class StoreMerchantTransactionRequest extends FormRequest
             'bank_reference' => ['nullable', 'min:3', 'max:191'],
             'reference' => ['nullable', 'min:3', 'max:191'],
             'type' => ['nullable', 'min:3', 'max:191'],
+            'status' => ['nullable', 'in:1,2'],
             'amount' => ['nullable', 'min:3', 'max:191'],
             'remarks' => ['nullable', 'min:3', 'max:191'],
             'notify' => ['nullable', 'min:3', 'max:191']
