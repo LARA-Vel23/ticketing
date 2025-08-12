@@ -5,44 +5,43 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Services\UserService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
-   public function index(): View
+    public $service;
+
+    public function __construct()
     {
-        $users = User::paginate(10);
-        return view('pages.admin.admin.index', compact('users'));
+        $this->service = (new UserService);
+    }
+
+    public function index(): View
+    {
+        return view('pages.admin.admin.index');
     }
 
     public function create(): View
     {
-        return view('pages.module.create');
+        return view('pages.admin.admin.create');
     }
 
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        return redirect()->back()->withSuccess('Module Created Successfully!');
+        $this->service->store($request->validated());
+        return redirect()->back()->withSuccess('Admin Created Successfully!');
     }
 
-    public function show(User $user): View
+    public function edit(User $admin): View
     {
-        return view('pages.module.show', compact('data'));
+        return view('pages.admin.admin.edit', compact('admin'));
     }
 
-    public function edit(User $user): View
+    public function update(UpdateUserRequest $request, User $admin): RedirectResponse
     {
-        return view('pages.module.show', compact('data'));
-    }
-
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse
-    {
-        return redirect()->back()->withSuccess('Module Updated Successfully!');
-    }
-
-    public function destroy(User $user): RedirectResponse
-    {
-        return redirect()->back()->withSuccess('Module Deleted Successfully!');
+        $this->service->update($request->validated(), $admin);
+        return redirect()->back()->withSuccess('Admin Updated Successfully!');
     }
 }

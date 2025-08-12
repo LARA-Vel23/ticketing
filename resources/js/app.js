@@ -8,7 +8,13 @@ window.$ = $;
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
+import '../../vendor/rappasoft/laravel-livewire-tables/resources/imports/laravel-livewire-tables.js';
+
 import '../sass/app.scss';
+
+// import '../js/coreUI';
+// import 'https://coreui.io/demos/bootstrap/5.0/free/vendors/@coreui/coreui/js/coreui.bundle.min.js';
+// import 'https://coreui.io/demos/bootstrap/5.0/free/vendors/simplebar/js/simplebar.min.js';
 
 $(document).ready(function() {
     let modalsElement = document.getElementById('livewire-bootstrap-modal');
@@ -27,4 +33,13 @@ $(document).ready(function() {
         modal.hide();
         Livewire.dispatch('resetModal');
     });
+
+    const header = document.querySelector('header.header');
+
+    document.addEventListener('scroll', () => {
+      if (header) {
+        header.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0);
+      }
+    });
+
 });

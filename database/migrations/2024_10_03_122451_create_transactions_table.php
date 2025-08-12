@@ -24,11 +24,11 @@ return new class extends Migration
             $table->string('bank_swift')->nullable();
             $table->string('bank_branch')->nullable();
             $table->string('bank_branch_code')->nullable();
-            $table->string('bank_reference')->nullable();
-            $table->string('reference')->unique();
-            $table->tinyInteger('type')->default(1);
-            $table->tinyInteger('status')->default(1);
-            $table->double('amount')->default(0);
+            $table->string('bank_reference')->index()->nullable();
+            $table->string('reference')->unique()->index();
+            $table->tinyInteger('type')->index()->default(1);
+            $table->tinyInteger('status')->index()->default(1);
+            $table->double('amount')->index()->default(0);
             $table->string('remarks')->nullable();
             $table->string('notify')->nullable();
             $table->boolean('is_system_generated')->default(0);

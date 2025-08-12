@@ -1,3 +1,8 @@
+<link rel="stylesheet" href="https://coreui.io/demos/bootstrap/5.0/free/vendors/simplebar/css/simplebar.css">
+<link rel="stylesheet" href="https://coreui.io/demos/bootstrap/5.0/free/css/vendors/simplebar.css">
+<link rel="stylesheet" href="https://coreui.io/demos/bootstrap/5.0/free/css/style.css">
+<link rel="stylesheet" href="https://coreui.io/demos/bootstrap/5.0/free/css/examples.css">
+<link rel="stylesheet" href="https://coreui.io/demos/bootstrap/5.0/free/css/ads.css">
 @if(App::environment('production'))
     @php
         $files = File::allFiles(public_path()."/build/assets");
